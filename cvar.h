@@ -22,6 +22,7 @@ class CVar;
 enum eCVarType {
 	eCVarType_Int,
 	eCVarType_Bool,
+	eCVarType_Double,
 	eCVarType_Float,
 	eCVarType_Vec2,
 	eCVarType_Vec3,
@@ -30,10 +31,11 @@ enum eCVarType {
 };
 
 enum eCVarTypeFlags {
-	eCVarTypeFlags_Int = 0x1,
-	eCVarTypeFlags_Bool = 0x2,
-	eCVarTypeFlags_Float = 0x4,
-	eCVarTypeFlags_String = 0x8,
+	eCVarTypeFlags_Int = 0x01,
+	eCVarTypeFlags_Bool = 0x02,
+	eCVarTypeFlags_Double = 0x04,
+	eCVarTypeFlags_Float = 0x08,
+	eCVarTypeFlags_String = 0x10,
 };
 
 class iCVarChangedListener
@@ -52,12 +54,14 @@ public:
 	int getInt() const;
 	bool getBool() const;
 	float getFloat() const;
+	double getDouble() const;
 	const float* getVector() const;
 	std::string getString() const;
 
 	void setInt(int v);
 	void setBool(bool v);
 	void setFloat(float v);
+	void setDouble(double v);
 	void setVec2(const float* v);
 	void setVec3(const float* v);
 	void setVec4(const float* v);
@@ -72,17 +76,19 @@ private:
 	int getConvertedToInt() const;
 	bool getConvertedToBool() const;
 	float getConvertedToFloat() const;
+	double getConvertedToDouble() const;
 	std::string getConvertedToString() const;
 	void getConvertedToVector(float* out) const;
 
 private:
 	eCVarType type_ = eCVarType_Int;
-	mutable uint32_t flags_ = eCVarTypeFlags_Int | eCVarTypeFlags_Bool | eCVarTypeFlags_Float;
+	mutable uint32_t flags_ = eCVarTypeFlags_Int | eCVarTypeFlags_Bool | eCVarTypeFlags_Float | eCVarTypeFlags_Double;
 	std::vector<iCVarChangedListener*> listeners_;
 	//
 	mutable int int_ = 0;
 	mutable bool bool_ = false;
 	mutable float float_[4] = { 0 };
+	mutable double double_ = { 0 };
 	mutable std::string string_;
 };
 

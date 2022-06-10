@@ -27,10 +27,11 @@ int CVar::getConvertedToInt() const {
 	switch (type_) {
 		case eCVarType_Int: return int_;
 		case eCVarType_Bool: return bool_ ? 1 : 0;
+		case eCVarType_Double: return (int)double_;
 		case eCVarType_Float:
 		case eCVarType_Vec2:
 		case eCVarType_Vec3:
-		case eCVarType_Vec4: return float_[0];
+		case eCVarType_Vec4: return (int)float_[0];
 		case eCVarType_String: return atoi(string_.c_str());
 	}
 
@@ -44,6 +45,7 @@ bool CVar::getConvertedToBool() const {
 	switch (type_) {
 		case eCVarType_Int: return int_ > 0;
 		case eCVarType_Bool: return bool_;
+		case eCVarType_Double: return double_ > 0;
 		case eCVarType_Float:
 		case eCVarType_Vec2:
 		case eCVarType_Vec3:
@@ -61,6 +63,25 @@ float CVar::getConvertedToFloat() const {
 	switch (type_) {
 		case eCVarType_Int: return (float)int_;
 		case eCVarType_Bool: return bool_ ? 1.0f : 0.0f;
+		case eCVarType_Double: return (float)double_;
+		case eCVarType_Float:
+		case eCVarType_Vec2:
+		case eCVarType_Vec3:
+		case eCVarType_Vec4: return float_[0];
+		case eCVarType_String: return atof(string_.c_str());
+	}
+
+	return 0;
+}
+
+double CVar::getConvertedToDouble() const {
+	if (flags_ & eCVarTypeFlags_Double)
+		return double_;
+
+	switch (type_) {
+		case eCVarType_Int: return (double)int_;
+		case eCVarType_Bool: return bool_ ? 1.0 : 0.0;
+		case eCVarType_Double: return double_;
 		case eCVarType_Float:
 		case eCVarType_Vec2:
 		case eCVarType_Vec3:
@@ -77,6 +98,8 @@ void CVar::getConvertedToVector(float* out) const {
 								  return;
 		case eCVarType_Bool:out[0] = bool_ ? 1.0f : 0.0f; out[1] = 0.0f; out[2] = 0.0f; out[3] = 0.0f;
 								  return;
+		case eCVarType_Double: out[0] = (float)double_; out[1] = 0.0f; out[2] = 0.0f; out[3] = 0.0f;
+									  return;
 		case eCVarType_Float: return;
 		case eCVarType_Vec2: return;
 		case eCVarType_Vec3: return;
@@ -94,6 +117,8 @@ std::string CVar::getConvertedToString() const {
 	switch (type_) {
 		case eCVarType_Int: return std::to_string(int_);
 		case eCVarType_Bool: return bool_ ? "TRUE" : "FALSE";
+		case eCVarType_Double: snprintf(buf, sizeof(buf)-1, "%.9f", double_);
+									  return std::string(buf);
 		case eCVarType_Float: snprintf(buf, sizeof(buf)-1, "%.9f", float_[0]);
 									 return std::string(buf);
 		case eCVarType_Vec2: snprintf(buf, sizeof(buf)-1, "%.9f %.9f", float_[0], float_[1]);
@@ -124,10 +149,24 @@ float CVar::getFloat() const {
 
 	const float f = getConvertedToFloat();
 
-	float_[0] = float_[1] = float_[2] = float_[3] = f;
-	flags_ |= eCVarTypeFlags_Float;
+	float_[0] = f;
+	double_ = f;
+	flags_ |= eCVarTypeFlags_Float | eCVarTypeFlags_Double;
 
 	return float_[0];
+}
+
+double CVar::getDouble() const {
+	if (flags_ & eCVarTypeFlags_Double)
+		return double_;
+
+	const double f = getConvertedToDouble();
+
+	float_[0] = f;
+	double_ = f;
+	flags_ |= eCVarTypeFlags_Float | eCVarTypeFlags_Double;
+
+	return double_;
 }
 
 bool CVar::getBool() const {
@@ -196,6 +235,18 @@ void CVar::setFloat(float v) {
 
 	type_ = eCVarType_Float;
 	flags_ = eCVarTypeFlags_Float;
+
+	if (isChanged)
+		invokeListeners();
+}
+
+void CVar::setDouble(double v) {
+	const bool isChanged = (double_ != v) || (type_ != eCVarType_Double);
+
+	double_ = v;
+
+	type_ = eCVarType_Double;
+	flags_ = eCVarTypeFlags_Double;
 
 	if (isChanged)
 		invokeListeners();
