@@ -50,7 +50,7 @@ bool CVar::getConvertedToBool() const {
 		case eCVarType_Vec2:
 		case eCVarType_Vec3:
 		case eCVarType_Vec4: return float_[0] > 0;
-		case eCVarType_String: stricmp(string_.c_str(), "false");
+		case eCVarType_String: return stricmp(string_.c_str(), "false") != 0;
 	}
 
 	return false;
