@@ -1,2 +1,3 @@
-# cvar
-OLEVariant-like untyped variable
+# Lutils
+
+cvar - OLEVariant-like untyped variable
