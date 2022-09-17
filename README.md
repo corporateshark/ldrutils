@@ -1,3 +1,4 @@
-# Lutils
+# lutils
 
-cvar - OLEVariant-like untyped variable
+cvar.h - OLEVariant-like untyped variable.
+ptr.h  - Minimalistic intrusive smartpointer.

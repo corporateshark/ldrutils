@@ -1,0 +1,23 @@
+﻿/**
+ * \file Ptr.h
+ * \brief
+ *
+ * Minimalistic intrusive smartpointer - utils
+ *
+ * \version 1.0.0
+ * \date 16/09/2022
+ * \author Sergey Kosarevsky, 2022
+ * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
+ * https://github.com/corporateshark/lutils
+ */
+
+#pragma once
+
+#include "ptr_utils.h"
+
+#include <utility>
+
+template <class T, class... Args> Ptr<T> make_intrusive(Args&&... args)
+{
+	return Ptr<T>(new T(std::forward<Args>(args)...));
+}

@@ -8,6 +8,7 @@
  * \date 08/06/2022
  * \author Sergey Kosarevsky, 2022
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
+ * https://github.com/corporateshark/lutils
  */
 
 #pragma once
