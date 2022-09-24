@@ -17,6 +17,10 @@
 #	include <strings.h>
 #endif
 
+#if defined(ANDROID)
+#	define stricmp strcasecmp
+#endif
+
 #include <algorithm>
 
 namespace ldr {
