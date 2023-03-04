@@ -11,7 +11,7 @@
  * https://github.com/corporateshark/lutils
  */
 
-#include "ptr.h"
+#include "Ptr.h"
 
 #include <assert.h>
 

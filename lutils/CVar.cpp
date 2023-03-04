@@ -11,7 +11,7 @@
  * https://github.com/corporateshark/lutils
  */
 
-#include "cvar.h"
+#include "CVar.h"
 
 #if !defined(_MSC_VER)
 #	include <strings.h>
