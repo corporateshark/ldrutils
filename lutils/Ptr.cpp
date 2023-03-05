@@ -22,21 +22,21 @@
 #	include <windows.h>
 #endif // _MSC_VER
 
-void IntrusiveCounter::incRef(void* p)
+void ldr::IntrusiveCounter::incRef(void* p)
 {
 	if (p) {
-		reinterpret_cast<IntrusiveCounter*>(p)->incRefCount();
+		reinterpret_cast<ldr::IntrusiveCounter*>(p)->incRefCount();
 	}
 }
 
-void IntrusiveCounter::decRef(void* p)
+void ldr::IntrusiveCounter::decRef(void* p)
 {
 	if (p) {
-		reinterpret_cast<IntrusiveCounter*>(p)->decRefCount();
+		reinterpret_cast<ldr::IntrusiveCounter*>(p)->decRefCount();
 	}
 }
 
-void IntrusiveCounter::incRefCount() {
+void ldr::IntrusiveCounter::incRefCount() {
 #if defined(_MSC_VER)
 	InterlockedIncrement(&refCounter_);
 #else
@@ -44,7 +44,7 @@ void IntrusiveCounter::incRefCount() {
 #endif // _MSC_VER
 }
 
-void IntrusiveCounter::decRefCount()
+void ldr::IntrusiveCounter::decRefCount()
 {
 	assert(refCounter_ > 0);
 

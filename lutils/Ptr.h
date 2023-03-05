@@ -16,6 +16,8 @@
 #include <cstddef>
 #include <cstdint>
 
+namespace ldr {
+
 class IntrusiveCounter
 {
  public:
@@ -32,6 +34,8 @@ class IntrusiveCounter
 	volatile uint32_t refCounter_ = 0;
 };
 
+} // namespace ldr
+
 template <class T> class clPtr
 {
  public:
@@ -39,31 +43,31 @@ template <class T> class clPtr
 	clPtr(const clPtr& other)
 	: value_(other.value_)
 	{
-		IntrusiveCounter::incRef(value_);
+		ldr::IntrusiveCounter::incRef(value_);
 	}
 	template <typename U>
 	clPtr(const clPtr<U>& ptr)
 	: value_(ptr.get())
 	{
-		IntrusiveCounter::incRef(value_);
+		ldr::IntrusiveCounter::incRef(value_);
 	}
 	clPtr(T* const p)
 	: value_(p)
 	{
-		IntrusiveCounter::incRef(value_);
+		ldr::IntrusiveCounter::incRef(value_);
 	}
 	clPtr(std::nullptr_t)
 	: value_(nullptr)
 	{
 	}
 	/// destructor
-	~clPtr() { IntrusiveCounter::decRef(value_); }
+	~clPtr() { ldr::IntrusiveCounter::decRef(value_); }
 	clPtr& operator=(const clPtr& other)
 	{
 		T* temp = value_;
 		value_  = other.value_;
-		IntrusiveCounter::incRef(other.value_);
-		IntrusiveCounter::decRef(temp);
+		ldr::IntrusiveCounter::incRef(other.value_);
+		ldr::IntrusiveCounter::decRef(temp);
 		return *this;
 	}
 	inline T* operator->() const { return value_; }
