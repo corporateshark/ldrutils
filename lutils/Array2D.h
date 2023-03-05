@@ -11,7 +11,6 @@
  * https://github.com/corporateshark/lutils
  */
 
-
 #pragma once
 
 #include "Macros.h"
