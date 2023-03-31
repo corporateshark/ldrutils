@@ -13,3 +13,5 @@ Macros.h - Useful utility macros.
 Ptr.h - Minimalistic intrusive smartpointer.
 
 PtrUtils.h - Intrusive smartpointer utils (depends on the <utility> header).
+
+Utils.h - Various utility functions.
