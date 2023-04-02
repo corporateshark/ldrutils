@@ -33,27 +33,27 @@
 namespace ldr
 {
 
-LFORCEINLINE float absf(float v)
+LFORCEINLINE [[nodiscard]] float absf(float v)
 {
 	return (v > 0.0f) ? v : -v;
 }
 
-LFORCEINLINE float minf(float a, float b)
+LFORCEINLINE [[nodiscard]] float minf(float a, float b)
 {
 	return (a < b) ? a : b;
 }
 
-LFORCEINLINE float maxf(float a, float b)
+LFORCEINLINE [[nodiscard]] float maxf(float a, float b)
 {
 	return (a > b) ? a : b;
 }
 
-LFORCEINLINE float degToRad(float deg)
+LFORCEINLINE [[nodiscard]] float degToRad(float deg)
 {
 	return deg * LMATH_DTOR;
 }
 
-LFORCEINLINE float radToDeg(float rad)
+LFORCEINLINE [[nodiscard]] float radToDeg(float rad)
 {
 	return rad * LMATH_RTOD;
 }
@@ -67,19 +67,19 @@ LFORCEINLINE void swapf(float& v1, float& v2)
 }
 
 // note: returns `true` for 0
-LFORCEINLINE bool isPowerOf2(uint32_t n)
+LFORCEINLINE [[nodiscard]] bool isPowerOf2(uint32_t n)
 {
 	return (n & (n - 1)) == 0;
 }
 
 // note: returns `true` for 0
-LFORCEINLINE bool isPowerOf2(uint64_t n)
+LFORCEINLINE [[nodiscard]] bool isPowerOf2(uint64_t n)
 {
 	return (n & (n - 1)) == 0;
 }
 
 // note: return 0 on overflow
-LFORCEINLINE uint32_t getNextPowerOf2(uint32_t n)
+LFORCEINLINE [[nodiscard]] uint32_t getNextPowerOf2(uint32_t n)
 {
 	n |= (n >> 1);
 	n |= (n >> 2);
@@ -90,7 +90,7 @@ LFORCEINLINE uint32_t getNextPowerOf2(uint32_t n)
 }
 
 // note: return 0 on overflow
-LFORCEINLINE uint64_t getNextPowerOf2(uint64_t n)
+LFORCEINLINE [[nodiscard]] uint64_t getNextPowerOf2(uint64_t n)
 {
 	n |= (n >> 1);
 	n |= (n >> 2);
