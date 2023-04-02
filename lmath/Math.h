@@ -180,4 +180,15 @@ LFORCEINLINE float vecToAngle(float x, float y)
 	return 180.0f + ldr::radToDeg(atan2(y, x));
 }
 
+/// 4-byte integer hashing: http://burtleburtle.net/bob/hash/integer.html
+inline uint32_t hash_uint32(uint32_t v)
+{
+	v = (v ^ 61) ^ (v >> 16);
+	v = v + (v << 3);
+	v = v ^ (v >> 4);
+	v = v * 0x27d4eb2d;
+	v = v ^ (v >> 15);
+	return v;
+}
+
 } // namespace ldr
