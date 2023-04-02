@@ -17,7 +17,7 @@
 #	include <strings.h>
 #endif
 
-#if defined(ANDROID)
+#if defined(ANDROID) || defined(__APPLE__)
 #	define stricmp strcasecmp
 #endif
 

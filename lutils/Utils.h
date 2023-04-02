@@ -16,9 +16,9 @@
 namespace ldr {
 
 // works with std::deque etc
-template <class T> T::value_type pop_front(T& container)
+template <class T> typename T::value_type pop_front(T& container)
 {
-	const T::value_type value = std::move(container.front());
+	const typename T::value_type value = std::move(container.front());
 	container.pop_front();
 	return value;
 }

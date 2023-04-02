@@ -18,6 +18,7 @@
 #	include <windows.h>
 #else
 #	include <dlfcn.h>
+#	include <stdio.h>
 #endif
 
 bool ldr::DynamicLibrary::load(const char* fileName)
