@@ -23,6 +23,6 @@
 #	define LFORCEINLINE_LAMBDA __attribute__((always_inline))
 #else
 #	define LRESTRICT
-#	define LFORCEINLINE
+#	define LFORCEINLINE inline
 #	define LFORCEINLINE_LAMBDA
 #endif
