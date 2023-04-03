@@ -32,27 +32,27 @@
 namespace ldr
 {
 
-LFORCEINLINE [[nodiscard]] float absf(float v)
+[[nodiscard]] LFORCEINLINE float absf(float v)
 {
 	return (v > 0.0f) ? v : -v;
 }
 
-LFORCEINLINE [[nodiscard]] float minf(float a, float b)
+[[nodiscard]] LFORCEINLINE float minf(float a, float b)
 {
 	return (a < b) ? a : b;
 }
 
-LFORCEINLINE [[nodiscard]] float maxf(float a, float b)
+[[nodiscard]] LFORCEINLINE float maxf(float a, float b)
 {
 	return (a > b) ? a : b;
 }
 
-LFORCEINLINE [[nodiscard]] float degToRad(float deg)
+[[nodiscard]] LFORCEINLINE float degToRad(float deg)
 {
 	return deg * LMATH_DTOR;
 }
 
-LFORCEINLINE [[nodiscard]] float radToDeg(float rad)
+[[nodiscard]] LFORCEINLINE float radToDeg(float rad)
 {
 	return rad * LMATH_RTOD;
 }
@@ -65,25 +65,25 @@ LFORCEINLINE void swapf(float& v1, float& v2)
 	v2 = tmp;
 }
 
-LFORCEINLINE float signf(float x)
+[[nodiscard]] LFORCEINLINE float signf(float x)
 {
 	return (x > 0) ? 1.0f : -1.0f;
 }
 
 // note: returns `true` for 0
-LFORCEINLINE [[nodiscard]] bool isPowerOf2(uint32_t n)
+[[nodiscard]] LFORCEINLINE bool isPowerOf2(uint32_t n)
 {
 	return (n & (n - 1)) == 0;
 }
 
 // note: returns `true` for 0
-LFORCEINLINE [[nodiscard]] bool isPowerOf2(uint64_t n)
+[[nodiscard]] LFORCEINLINE bool isPowerOf2(uint64_t n)
 {
 	return (n & (n - 1)) == 0;
 }
 
 // note: return 0 on overflow
-LFORCEINLINE [[nodiscard]] uint32_t getNextPowerOf2(uint32_t n)
+[[nodiscard]] LFORCEINLINE uint32_t getNextPowerOf2(uint32_t n)
 {
 	n |= (n >> 1);
 	n |= (n >> 2);
@@ -94,7 +94,7 @@ LFORCEINLINE [[nodiscard]] uint32_t getNextPowerOf2(uint32_t n)
 }
 
 // note: return 0 on overflow
-LFORCEINLINE [[nodiscard]] uint64_t getNextPowerOf2(uint64_t n)
+[[nodiscard]] LFORCEINLINE uint64_t getNextPowerOf2(uint64_t n)
 {
 	n |= (n >> 1);
 	n |= (n >> 2);
@@ -106,20 +106,20 @@ LFORCEINLINE [[nodiscard]] uint64_t getNextPowerOf2(uint64_t n)
 }
 
 // floating-point division remainder (wrap around negative values)
-LFORCEINLINE [[nodiscard]] float modf(float a, float b)
+[[nodiscard]] LFORCEINLINE float modf(float a, float b)
 {
 	a -= b * floor(a / b);
 	return (a < 0) ? a + b : a;
 }
 
 // integer division remainder (wrap around negative values)
-LFORCEINLINE [[nodiscard]] int modi(int a, int b)
+[[nodiscard]] LFORCEINLINE int modi(int a, int b)
 {
 	const int r = a % b;
 	return (r < 0) ? r + b : r;
 }
 
-template <typename T> LFORCEINLINE [[nodiscard]] T clamp(T x, T minVal, T maxVal)
+template <typename T> [[nodiscard]] LFORCEINLINE T clamp(T x, T minVal, T maxVal)
 {
 	if (x > maxVal)
 		return maxVal;
@@ -128,7 +128,7 @@ template <typename T> LFORCEINLINE [[nodiscard]] T clamp(T x, T minVal, T maxVal
 	return x;
 }
 
-LFORCEINLINE [[nodiscard]] float clampfPeriodic(float x, float minVal, float maxVal)
+[[nodiscard]] LFORCEINLINE float clampfPeriodic(float x, float minVal, float maxVal)
 {
 	if (x > maxVal)
 		return minVal + ldr::modf(x - minVal, maxVal - minVal);
@@ -138,13 +138,13 @@ LFORCEINLINE [[nodiscard]] float clampfPeriodic(float x, float minVal, float max
 }
 
 // GLSL step()
-LFORCEINLINE [[nodiscard]] float step(float edge, float x)
+[[nodiscard]] LFORCEINLINE float step(float edge, float x)
 {
 	return x < edge ? 0.0f : 1.0f;
 }
 
 // GLSL smoothstep()
-LFORCEINLINE [[nodiscard]] float smoothStep(float edge0, float edge1, float x)
+[[nodiscard]] LFORCEINLINE float smoothStep(float edge0, float edge1, float x)
 {
 	if (x <= edge0)
 		return 0.0f;
@@ -154,34 +154,34 @@ LFORCEINLINE [[nodiscard]] float smoothStep(float edge0, float edge1, float x)
 	return t * t * (3.0f - 2.0f * t);
 }
 
-LFORCEINLINE [[nodiscard]] float lerp(float a, float b, float x)
+[[nodiscard]] LFORCEINLINE float lerp(float a, float b, float x)
 {
 	return std::fmaf(x, b - a, a);
 }
 
-LFORCEINLINE [[nodiscard]] double lerp(double a, double b, float x)
+[[nodiscard]] LFORCEINLINE double lerp(double a, double b, float x)
 {
 	return std::fma(x, b - a, a);
 }
 
-template <class T> LFORCEINLINE [[nodiscard]] T lerp(const T& a, const T& b, float x)
+template <class T> [[nodiscard]] LFORCEINLINE T lerp(const T& a, const T& b, float x)
 {
 	return x * (b - a) + a;
 }
 
 // note: degrees
-template <class T> LFORCEINLINE T clipAngleTo0_360(T angle)
+template <class T> [[nodiscard]] LFORCEINLINE T clipAngleTo0_360(T angle)
 {
 	return std::fmod(angle, T(360));
 }
 
-LFORCEINLINE float vecToAngle(float x, float y)
+[[nodiscard]] LFORCEINLINE float vecToAngle(float x, float y)
 {
 	return 180.0f + ldr::radToDeg(atan2(y, x));
 }
 
 /// 4-byte integer hashing: http://burtleburtle.net/bob/hash/integer.html
-inline uint32_t hash_uint32(uint32_t v)
+[[nodiscard]] inline uint32_t hash_uint32(uint32_t v)
 {
 	v = (v ^ 61) ^ (v >> 16);
 	v = v + (v << 3);
