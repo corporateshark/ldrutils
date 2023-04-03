@@ -47,8 +47,9 @@ class vec2
 
 	LFORCEINLINE float operator[](size_t idx) const { return (&x)[idx]; };
 	LFORCEINLINE float& operator[](size_t idx) { return (&x)[idx]; };
+	LFORCEINLINE vec2 operator-() const { return vec2(-x, -y); }
 
-	// swizzles
+	/// swizzles
 	LFORCEINLINE vec2 yx() const { return vec2(y, x); };
 };
 
@@ -72,6 +73,15 @@ class vec2i
 
 	LFORCEINLINE int operator[](size_t idx) const { return (&x)[idx]; };
 	LFORCEINLINE int& operator[](size_t idx) { return (&x)[idx]; };
+
+	LFORCEINLINE vec2i operator-(const vec2i& v) const { return vec2i(x - v.x, y - v.y); }
+	LFORCEINLINE vec2i operator+(const vec2i& v) const { return vec2i(x + v.x, y + v.y); }
+
+	LFORCEINLINE bool operator==(const vec2i& v) const { return (v.x == x) && (v.y == y); }
+	LFORCEINLINE bool operator!=(const vec2i& v) const { return (v.x != x) || (v.y != y); }
+
+	LFORCEINLINE vec2i operator*(int a) const { return vec2i(x * a, y * a); }
+	LFORCEINLINE vec2i operator/(int a) const { return vec2i(x / a, y / a); }
 };
 
 class vec3
@@ -119,7 +129,18 @@ class vec3
 	LFORCEINLINE float operator[](size_t idx) const { return (&x)[idx]; }
 	LFORCEINLINE float& operator[](size_t idx) { return (&x)[idx]; }
 
-	// swizzles
+	LFORCEINLINE vec3 operator-() const { return vec3(-x, -y, -z); }
+	LFORCEINLINE vec3 operator+() const { return vec3(+x, +y, +z); }
+
+	LFORCEINLINE vec3 operator*(const float a) const { return vec3(x * a, y * a, z * a); }
+	LFORCEINLINE vec3 operator/(const float a) const { return vec3(x / a, y / a, z / a); }
+
+	LFORCEINLINE vec3 operator/(const vec3& v) const { return vec3(x / v.x, y / v.y, z / v.z); }
+
+	LFORCEINLINE vec3 operator-(const vec3& v) const { return vec3(x - v.x, y - v.y, z - v.z); }
+	LFORCEINLINE vec3 operator+(const vec3& v) const { return vec3(x + v.x, y + v.y, z + v.z); }
+
+	/// swizzles
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
 	LFORCEINLINE vec3 yzx() const { return vec3(y, z, x); }
 	LFORCEINLINE vec2 xz() const { return vec2(x, z); }
@@ -242,6 +263,15 @@ class vec4
 
 	LFORCEINLINE float operator[](size_t idx) const { return (&x)[idx]; }
 	LFORCEINLINE float& operator[](size_t idx) { return (&x)[idx]; }
+
+	LFORCEINLINE vec4 operator-(const vec4& v) const { return vec4(x - v.x, y - v.y, z - v.z, w - v.w); }
+	LFORCEINLINE vec4 operator+(const vec4& v) const { return vec4(x + v.x, y + v.y, z + v.z, w + v.w); }
+
+	LFORCEINLINE vec4 operator*(float a) const { return vec4(x * a, y * a, z * a, w * a); }
+	LFORCEINLINE vec4 operator/(float a) const { return vec4(x / a, y / a, z / a, w / a); }
+
+	LFORCEINLINE bool operator==(const vec4& v) const { return (v.x == x) && (v.y == y) && (v.z == z) && (v.w == w); }
+	LFORCEINLINE bool operator!=(const vec4& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
 
 	/// swizzles
 	LFORCEINLINE vec3 xyz() const { return vec3(x, y, z); }
