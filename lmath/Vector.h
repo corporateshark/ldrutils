@@ -18,6 +18,11 @@
 namespace ldr
 {
 
+class vec2i;
+class vec2;
+class vec3;
+class vec4;
+
 class vec2
 {
  public:
@@ -48,6 +53,67 @@ class vec2
 	LFORCEINLINE float operator[](size_t idx) const { return (&x)[idx]; };
 	LFORCEINLINE float& operator[](size_t idx) { return (&x)[idx]; };
 	LFORCEINLINE vec2 operator-() const { return vec2(-x, -y); }
+
+	LFORCEINLINE vec2 operator-(const vec2& v) const { return vec2(x - v.x, y - v.y); }
+	LFORCEINLINE vec2 operator+(const vec2& v) const { return vec2(x + v.x, y + v.y); }
+	LFORCEINLINE vec2 operator*(const vec2& v) const { return vec2(x * v.x, y * v.y); }
+	LFORCEINLINE vec2 operator/(const vec2& v) const { return vec2(x / v.x, y / v.y); }
+
+	LFORCEINLINE vec2 operator*(float a) const { return vec2(x * a, y * a); }
+	LFORCEINLINE vec2 operator/(float a) const { return vec2(x / a, y / a); }
+
+	LFORCEINLINE vec2& operator+=(const vec2& v)
+	{
+		x += v.x;
+		y += v.y;
+		return *this;
+	}
+
+	LFORCEINLINE vec2& operator-=(const vec2& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		return *this;
+	}
+
+	LFORCEINLINE vec2& operator/=(float a)
+	{
+		x /= a;
+		y /= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec2& operator/=(const vec2& v)
+	{
+		x /= v.x;
+		y /= v.y;
+		return *this;
+	}
+
+	LFORCEINLINE vec2& operator*=(float a)
+	{
+		x *= a;
+		y *= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec2& operator*=(const vec2& v)
+	{
+		x *= v.x;
+		y *= v.y;
+		return *this;
+	}
+
+	LFORCEINLINE bool operator==(const vec2& v) const { return (v.x == x) && (v.y == y); }
+	LFORCEINLINE bool operator!=(const vec2& v) const { return (v.x != x) || (v.y != y); }
+
+	LFORCEINLINE const float* toFloatPtr() const { return &x; };
+	LFORCEINLINE float* toFloatPtr() { return &x; };
+
+	LFORCEINLINE float length() const { return sqrtf(x * x + y * y); };
+	LFORCEINLINE float sqrLength() const { return x * x + y * y; };
+
+	LFORCEINLINE float dot(const vec2& v) const { return x * v.x + y * v.y; }
 
 	/// swizzles
 	LFORCEINLINE vec2 yx() const { return vec2(y, x); };
