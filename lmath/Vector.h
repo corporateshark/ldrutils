@@ -276,6 +276,15 @@ class vec3i
 	LFORCEINLINE int operator[](size_t idx) const { return (&x)[idx]; }
 	LFORCEINLINE int& operator[](size_t idx) { return (&x)[idx]; }
 
+	LFORCEINLINE vec3i operator-(const vec3i& v) const { return vec3i(x - v.x, y - v.y, z - v.z); }
+	LFORCEINLINE vec3i operator+(const vec3i& v) const { return vec3i(x + v.x, y + v.y, z + v.z); }
+
+	LFORCEINLINE bool operator==(const vec3i& v) const { return (v.x == x) && (v.y == y) && (v.z == z); }
+	LFORCEINLINE bool operator!=(const vec3i& v) const { return (v.x != x) || (v.y != y) || (v.z != z); }
+
+	LFORCEINLINE vec3i operator*(int a) const { return vec3i(x * a, y * a, z * a); }
+	LFORCEINLINE vec3i operator/(int a) const { return vec3i(x / a, y / a, z / a); }
+
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 };
 
