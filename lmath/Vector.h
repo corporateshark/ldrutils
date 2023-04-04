@@ -247,6 +247,8 @@ class vec3
 	LFORCEINLINE bool operator==(const vec3& v) const { return (v.x == x) && (v.y == y) && (v.z == z); }
 	LFORCEINLINE bool operator!=(const vec3& v) const { return (v.x != x) || (v.y != y) || (v.z != z); }
 
+	LFORCEINLINE vec3 operator*(const vec3& v) const { return vec3(x * v.x, y * v.y, z * v.z); }
+
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
@@ -255,6 +257,7 @@ class vec3
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
 
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
+	LFORCEINLINE vec3 cross(const vec3& v) const { return vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 
 	/// swizzles
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
@@ -353,6 +356,8 @@ class vec4i
 
 	LFORCEINLINE bool operator==(const vec4i& v) const { return (v.x == x) && (v.y == y) && (v.z == z) && (v.w == w); }
 	LFORCEINLINE bool operator!=(const vec4i& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
+
+	LFORCEINLINE int dot(const vec4i& v) const { return (x * v.x + y * v.y + z * v.z + w * v.w); }
 };
 
 class vec4
@@ -470,6 +475,8 @@ class vec4
 	LFORCEINLINE bool operator!=(const vec4& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
 
 	LFORCEINLINE vec4 operator*(const vec4& v) const { return vec4(x * v.x, y * v.y, z * v.z, w * v.w); }
+
+	LFORCEINLINE float dot(const vec4& v) const { return (x * v.x + y * v.y + z * v.z + w * v.w); }
 
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
