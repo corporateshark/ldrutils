@@ -148,6 +148,9 @@ class vec2i
 
 	LFORCEINLINE vec2i operator*(int a) const { return vec2i(x * a, y * a); }
 	LFORCEINLINE vec2i operator/(int a) const { return vec2i(x / a, y / a); }
+
+	LFORCEINLINE const int* toIntPtr() const { return &x; };
+	LFORCEINLINE int* toIntPtr() { return &x; };
 };
 
 class vec3
@@ -284,6 +287,9 @@ class vec3i
 
 	LFORCEINLINE vec3i operator*(int a) const { return vec3i(x * a, y * a, z * a); }
 	LFORCEINLINE vec3i operator/(int a) const { return vec3i(x / a, y / a, z / a); }
+
+	LFORCEINLINE const int* toIntPtr() const { return &x; }
+	LFORCEINLINE int* toIntPtr() { return &x; }
 
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 };
