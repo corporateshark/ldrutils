@@ -151,6 +151,9 @@ class vec2i
 
 	LFORCEINLINE const int* toIntPtr() const { return &x; };
 	LFORCEINLINE int* toIntPtr() { return &x; };
+
+	LFORCEINLINE float length() const { return sqrtf(static_cast<float>(x * x + y * y)); };
+	LFORCEINLINE int sqrLength() const { return x * x + y * y; };
 };
 
 class vec3
@@ -246,9 +249,10 @@ class vec3
 
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
+	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 
-	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z);	}
-	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z;	}
+	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
+	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
 
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
 
@@ -291,6 +295,9 @@ class vec3i
 	LFORCEINLINE const int* toIntPtr() const { return &x; }
 	LFORCEINLINE int* toIntPtr() { return &x; }
 
+	LFORCEINLINE float length() const { return toVector3().length(); }
+	LFORCEINLINE int sqrLength() const { return x * x + y * y + z * z; }
+
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 };
 
@@ -309,6 +316,11 @@ class vec4i
 	, y(y)
 	, z(z)
 	, w(w){};
+	vec4i(float x, float y, float z, float w)
+	: x(static_cast<int>(x))
+	, y(static_cast<int>(y))
+	, z(static_cast<int>(z))
+	, w(static_cast<int>(w)){};
 	explicit vec4i(int a)
 	: x(a)
 	, y(a)
