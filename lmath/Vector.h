@@ -206,6 +206,49 @@ class vec3
 	LFORCEINLINE vec3 operator-(const vec3& v) const { return vec3(x - v.x, y - v.y, z - v.z); }
 	LFORCEINLINE vec3 operator+(const vec3& v) const { return vec3(x + v.x, y + v.y, z + v.z); }
 
+	LFORCEINLINE vec3& operator*=(float a)
+	{
+		x *= a;
+		y *= a;
+		z *= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec3& operator/=(float a)
+	{
+		x /= a;
+		y /= a;
+		z /= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec3& operator+=(const vec3& v)
+	{
+		x += v.x;
+		y += v.y;
+		z += v.z;
+		return *this;
+	}
+
+	LFORCEINLINE vec3& operator-=(const vec3& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		return *this;
+	}
+
+	LFORCEINLINE bool operator==(const vec3& v) const { return (v.x == x) && (v.y == y) && (v.z == z); }
+	LFORCEINLINE bool operator!=(const vec3& v) const { return (v.x != x) || (v.y != y) || (v.z != z); }
+
+	LFORCEINLINE const float* toFloatPtr() const { return &x; }
+	LFORCEINLINE float* toFloatPtr() { return &x; }
+
+	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z);	}
+	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z;	}
+
+	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
+
 	/// swizzles
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
 	LFORCEINLINE vec3 yzx() const { return vec3(y, z, x); }
