@@ -412,8 +412,52 @@ class vec4
 	LFORCEINLINE vec4 operator*(float a) const { return vec4(x * a, y * a, z * a, w * a); }
 	LFORCEINLINE vec4 operator/(float a) const { return vec4(x / a, y / a, z / a, w / a); }
 
+	LFORCEINLINE vec4& operator*=(float a)
+	{
+		x *= a;
+		y *= a;
+		z *= a;
+		w *= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec4& operator/=(float a)
+	{
+		x /= a;
+		y /= a;
+		z /= a;
+		w /= a;
+		return *this;
+	}
+
+	LFORCEINLINE vec4& operator-=(const vec4& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		w -= v.w;
+		return *this;
+	}
+
+	LFORCEINLINE vec4& operator+=(const vec4& v)
+	{
+		x += v.x;
+		y += v.y;
+		z += v.z;
+		w += v.w;
+		return *this;
+	}
+
 	LFORCEINLINE bool operator==(const vec4& v) const { return (v.x == x) && (v.y == y) && (v.z == z) && (v.w == w); }
 	LFORCEINLINE bool operator!=(const vec4& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
+
+	LFORCEINLINE vec4 operator*(const vec4& v) const { return vec4(x * v.x, y * v.y, z * v.z, w * v.w); }
+
+	LFORCEINLINE const float* toFloatPtr() const { return &x; }
+	LFORCEINLINE float* toFloatPtr() { return &x; }
+
+	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
+	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
 
 	/// swizzles
 	LFORCEINLINE vec3 xyz() const { return vec3(x, y, z); }
