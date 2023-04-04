@@ -311,6 +311,30 @@ class vec4i
 
 	LFORCEINLINE int operator[](size_t idx) const { return (&x)[idx]; }
 	LFORCEINLINE int& operator[](size_t idx) { return (&x)[idx]; }
+
+	LFORCEINLINE vec4i operator-(const vec4i& v) const { return vec4i(x - v.x, y - v.y, z - v.z, w - v.w); }
+	LFORCEINLINE vec4i operator+(const vec4i& v) const { return vec4i(x + v.x, y + v.y, z + v.z, w + v.w); }
+
+	LFORCEINLINE vec4i& operator-=(const vec4i& v)
+	{
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		w -= v.w;
+		return *this;
+	}
+
+	LFORCEINLINE vec4i& operator+=(const vec4i& v)
+	{
+		x += v.x;
+		y += v.y;
+		z += v.z;
+		w += v.w;
+		return *this;
+	}
+
+	LFORCEINLINE bool operator==(const vec4i& v) const { return (v.x == x) && (v.y == y) && (v.z == z) && (v.w == w); }
+	LFORCEINLINE bool operator!=(const vec4i& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
 };
 
 class vec4
