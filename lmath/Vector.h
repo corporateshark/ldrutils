@@ -112,6 +112,7 @@ class vec2
 
 	LFORCEINLINE float length() const { return sqrtf(x * x + y * y); };
 	LFORCEINLINE float sqrLength() const { return x * x + y * y; };
+	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE float dot(const vec2& v) const { return x * v.x + y * v.y; }
 
@@ -251,10 +252,12 @@ class vec3
 
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
+
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
+	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
 	LFORCEINLINE vec3 cross(const vec3& v) const { return vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
@@ -487,6 +490,11 @@ class vec4
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
 
+	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
+	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
+
+	LFORCEINLINE void normalize() { *this /= length(); }
+
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
 
@@ -498,6 +506,26 @@ class vec4
 	LFORCEINLINE vec3 zyx() const { return vec3(z, y, x); }
 	LFORCEINLINE vec3 zyz() const { return vec3(z, y, z); }
 };
+
+LFORCEINLINE vec2 normalize(const vec2 v)
+{
+	return v / v.length();
+}
+
+LFORCEINLINE vec3 normalize(const vec3& v)
+{
+	return v / v.length();
+}
+
+LFORCEINLINE vec4 normalize(const vec4& v)
+{
+	return v / v.length();
+}
+
+LFORCEINLINE vec3 cross(const vec3& a, const vec3& b)
+{
+	return a.cross(b);
+}
 
 // 32-bit RGBA colors, etc
 class vec4b
