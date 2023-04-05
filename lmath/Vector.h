@@ -23,6 +23,11 @@ class vec2;
 class vec3;
 class vec4;
 
+inline vec2i operator*(int a, const vec2i& b);
+inline vec2 operator*(float a, const vec2& b);
+inline vec3 operator*(float a, const vec3& b);
+inline vec4 operator*(float a, const vec4& b);
+
 class vec2
 {
  public:
@@ -506,6 +511,26 @@ class vec4
 	LFORCEINLINE vec3 zyx() const { return vec3(z, y, x); }
 	LFORCEINLINE vec3 zyz() const { return vec3(z, y, z); }
 };
+
+LFORCEINLINE vec2 operator*(float a, const vec2& b)
+{
+	return vec2(b.x * a, b.y * a);
+}
+
+LFORCEINLINE vec2i operator*(int a, const vec2i& b)
+{
+	return vec2i(b.x * a, b.y * a);
+}
+
+LFORCEINLINE vec3 operator*(float a, const vec3& b)
+{
+	return vec3(b.x * a, b.y * a, b.z * a);
+}
+
+LFORCEINLINE vec4 operator*(float a, const vec4& b)
+{
+	return vec4(b.x * a, b.y * a, b.z * a, b.w * a);
+}
 
 LFORCEINLINE vec2 normalize(const vec2 v)
 {
