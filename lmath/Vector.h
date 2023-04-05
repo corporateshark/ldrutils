@@ -119,6 +119,13 @@ class vec2
 	LFORCEINLINE float sqrLength() const { return x * x + y * y; };
 	LFORCEINLINE void normalize() { *this /= length(); }
 
+	LFORCEINLINE vec2 getNormalized() const
+	{
+		vec2 v(*this);
+		v.normalize();
+		return v;
+	};
+
 	LFORCEINLINE float dot(const vec2& v) const { return x * v.x + y * v.y; }
 
 	/// swizzles
@@ -263,6 +270,13 @@ class vec3
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
 	LFORCEINLINE void normalize() { *this /= length(); }
+
+	LFORCEINLINE vec3 getNormalized() const
+	{
+		vec3 v(*this);
+		v.normalize();
+		return v;
+	};
 
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
 	LFORCEINLINE vec3 cross(const vec3& v) const { return vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
@@ -498,10 +512,16 @@ class vec4
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 
-	LFORCEINLINE void normalize() { *this /= length(); }
-
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
+	LFORCEINLINE void normalize() { *this /= length(); }
+
+	LFORCEINLINE vec4 getNormalized() const
+	{
+		vec4 v(*this);
+		v.normalize();
+		return v;
+	};
 
 	/// swizzles
 	LFORCEINLINE vec3 xyz() const { return vec3(x, y, z); }
