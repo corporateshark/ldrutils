@@ -358,6 +358,12 @@ class vec4i
 	LFORCEINLINE bool operator!=(const vec4i& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
 
 	LFORCEINLINE int dot(const vec4i& v) const { return (x * v.x + y * v.y + z * v.z + w * v.w); }
+
+	/// swizzles
+	LFORCEINLINE vec2i xy() const { return vec2i(x, y); }
+	LFORCEINLINE vec2i yx() const { return vec2i(y, x); }
+	LFORCEINLINE vec3i xyz() const { return vec3i(x, y, z); }
+	LFORCEINLINE vec3i zyx() const { return vec3i(z, y, x); }
 };
 
 class vec4
