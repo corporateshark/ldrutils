@@ -524,6 +524,10 @@ class vec4
 	};
 
 	/// swizzles
+	LFORCEINLINE vec4 bgra() const { return vec4(z, y, x, w); };
+	LFORCEINLINE vec2 xy() const { return vec2(x, y); }
+	LFORCEINLINE vec2 yx() const { return vec2(y, x); }
+	LFORCEINLINE vec2 zw() const { return vec2(z, w); }
 	LFORCEINLINE vec3 xyz() const { return vec3(x, y, z); }
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
 	LFORCEINLINE vec3 yxz() const { return vec3(y, x, z); }
