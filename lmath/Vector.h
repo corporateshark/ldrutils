@@ -694,6 +694,39 @@ LFORCEINLINE vec3 cross(const vec3& a, const vec3& b)
 	return a.cross(b);
 }
 
+inline vec2 lerp(const vec2& v1, const vec2& v2, float t)
+{
+	if (t <= 0.0f) {
+		return v1;
+	} else if (t >= 1.0f) {
+		return v2;
+	} else {
+		return v1 + t * (v2 - v1);
+	}
+}
+
+inline vec3 lerp(const vec3& v1, const vec3& v2, float t)
+{
+	if (t <= 0.0f) {
+		return v1;
+	} else if (t >= 1.0f) {
+		return v2;
+	} else {
+		return v1 + t * (v2 - v1);
+	}
+}
+
+inline vec4 lerp(const vec4& v1, const vec4& v2, float t)
+{
+	if (t <= 0.0f) {
+		return v1;
+	} else if (t >= 1.0f) {
+		return v2;
+	} else {
+		return v1 + t * (v2 - v1);
+	}
+}
+
 // 32-bit RGBA colors, etc
 class vec4b
 {
