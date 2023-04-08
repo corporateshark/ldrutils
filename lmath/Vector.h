@@ -128,6 +128,10 @@ class vec2
 
 	LFORCEINLINE float dot(const vec2& v) const { return x * v.x + y * v.y; }
 
+	LFORCEINLINE vec2 getMinVector(const vec2& v) const { return vec2(x < v.x ? x : v.x, y < v.y ? y : v.y); }
+	LFORCEINLINE vec2 getMaxVector(const vec2& v) const { return vec2(x > v.x ? x : v.x, y > v.y ? y : v.y); }
+	LFORCEINLINE vec2 getOrthogonalVector() const { return vec2(-y, x); }
+
 	/// swizzles
 	LFORCEINLINE vec2 yx() const { return vec2(y, x); };
 };
@@ -281,6 +285,9 @@ class vec3
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
 	LFORCEINLINE vec3 cross(const vec3& v) const { return vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 
+	LFORCEINLINE vec3 getMinVector(const vec3& v) const { return vec3(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z); }
+	LFORCEINLINE vec3 getMaxVector(const vec3& v) const { return vec3(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z); }
+
 	/// swizzles
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
 	LFORCEINLINE vec3 yzx() const { return vec3(y, z, x); }
@@ -316,6 +323,9 @@ class vec3i
 
 	LFORCEINLINE vec3i operator*(int a) const { return vec3i(x * a, y * a, z * a); }
 	LFORCEINLINE vec3i operator/(int a) const { return vec3i(x / a, y / a, z / a); }
+
+	LFORCEINLINE vec3i getMinVector(const vec3i& v) const { return vec3i(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z); }
+	LFORCEINLINE vec3i getMaxVector(const vec3i& v) const { return vec3i(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z); }
 
 	LFORCEINLINE const int* toIntPtr() const { return &x; }
 	LFORCEINLINE int* toIntPtr() { return &x; }
