@@ -347,13 +347,31 @@ class vec3
 		const float d3 = m - z;
 		return sqrtf((d1 * d1 + d2 * d2 + d3 * d3) / 3.0f);
 	}
-	LFORCEINLINE void normalize() { *this /= length(); }
+
+	LFORCEINLINE void normalize()
+	{
+#if defined(LMATH_USE_SSE4)
+		__m128 vec = _mm_setr_ps(x, y, z, 0.0f);
+		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0x7F)));
+		x = vec.m128_f32[0];
+		y = vec.m128_f32[1];
+		z = vec.m128_f32[2];
+#else
+		*this /= length();
+#endif // LMATH_USE_SSE4
+	}
 
 	LFORCEINLINE vec3 getNormalized() const
 	{
+#if defined(LMATH_USE_SSE4)
+		__m128 vec = _mm_setr_ps(x, y, z, 0.0f);
+		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0x7F)));
+		return *(vec3*)&vec;
+#else
 		vec3 v(*this);
 		v.normalize();
 		return v;
+#endif // LMATH_USE_SSE4
 	};
 
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
@@ -664,14 +682,32 @@ class vec4
 		return sqrtf((d1 * d1 + d2 * d2 + d3 * d3 + d4 * d4) / 4.0f);
 	}
 
-	LFORCEINLINE void normalize() { *this /= length(); }
+	LFORCEINLINE void normalize()
+	{
+#if defined(LMATH_USE_SSE4)
+		__m128 vec = _mm_setr_ps(x, y, z, w);
+		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0xFF)));
+		x          = vec.m128_f32[0];
+		y          = vec.m128_f32[1];
+		z          = vec.m128_f32[2];
+		w          = vec.m128_f32[3];
+#else
+		*this /= length();
+#endif
+	}
 
 	LFORCEINLINE vec4 getNormalized() const
 	{
+#if defined(LMATH_USE_SSE4)
+		__m128 vec = _mm_setr_ps(x, y, z, w);
+		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0xFF)));
+		return *(vec4*)&vec;
+#else
 		vec4 v(*this);
 		v.normalize();
 		return v;
-	};
+#endif // LMATH_USE_SSE4
+	}
 
 	LFORCEINLINE bool isZeroVector(float eps) const
 	{
