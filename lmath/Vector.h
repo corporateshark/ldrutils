@@ -119,6 +119,14 @@ class vec2
 	LFORCEINLINE float sqrLength() const { return x * x + y * y; };
 	LFORCEINLINE float sum() const { return x + y; }
 	LFORCEINLINE float avg() const { return (x + y) / 2.0f; }
+	LFORCEINLINE float stdDev() const
+	{
+		const float m  = avg();
+		const float d1 = m - x;
+		const float d2 = m - y;
+		return sqrtf((d1 * d1 + d2 * d2) / 2.0f);
+	}
+
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec2 getNormalized() const
@@ -312,6 +320,14 @@ class vec3
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
 	LFORCEINLINE float sum() const { return x + y + z; }
 	LFORCEINLINE float avg() const { return (x + y + z) / 3.0f; }
+	LFORCEINLINE float stdDev() const
+	{
+		const float m  = avg();
+		const float d1 = m - x;
+		const float d2 = m - y;
+		const float d3 = m - z;
+		return sqrtf((d1 * d1 + d2 * d2 + d3 * d3) / 3.0f);
+	}
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec3 getNormalized() const
@@ -583,6 +599,16 @@ class vec4
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
 	LFORCEINLINE float sum() const { return x + y + z + w; }
 	LFORCEINLINE float avg() const { return (x + y + z + w) / 4.0f; }
+	LFORCEINLINE float stdDev() const
+	{
+		const float m  = avg();
+		const float d1 = m - x;
+		const float d2 = m - y;
+		const float d3 = m - z;
+		const float d4 = m - w;
+		return sqrtf((d1 * d1 + d2 * d2 + d3 * d3 + d4 * d4) / 4.0f);
+	}
+
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec4 getNormalized() const
