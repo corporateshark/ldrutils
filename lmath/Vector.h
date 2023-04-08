@@ -521,6 +521,7 @@ class vec4
 
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
+	LFORCEINLINE vec4i toVector4i() const { return vec4i(x, y, z, w); }
 
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
