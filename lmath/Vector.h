@@ -299,6 +299,12 @@ class vec3
 	LFORCEINLINE float dot(const vec3& v) const { return x * v.x + y * v.y + z * v.z; }
 	LFORCEINLINE vec3 cross(const vec3& v) const { return vec3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x); }
 
+	LFORCEINLINE size_t getMaximumComponentIndex() const { return x > y ? (x > z ? 0 : 2) : (y > z ? 1 : 2); }
+	LFORCEINLINE size_t getMinimumComponentIndex() const { return x < y ? (x < z ? 0 : 2) : (y < z ? 1 : 2); }
+
+	LFORCEINLINE float getMaximumComponent() const { return x > y ? (x > z ? x : z) : (y > z ? y : z); }
+	LFORCEINLINE float getMinimumComponent() const { return x < y ? (x < z ? x : z) : (y < z ? y : z); }
+
 	LFORCEINLINE vec3 getMinVector(const vec3& v) const { return vec3(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z); }
 	LFORCEINLINE vec3 getMaxVector(const vec3& v) const { return vec3(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z); }
 
