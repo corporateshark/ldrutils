@@ -431,8 +431,29 @@ class vec3
 		return fabs(x) < fabs(y) ? (fabs(x) < fabs(z) ? fabs(x) : fabs(z)) : (fabs(y) < fabs(z) ? fabs(y) : fabs(z));
 	}
 
-	LFORCEINLINE vec3 getMinVector(const vec3& v) const { return vec3(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z); }
-	LFORCEINLINE vec3 getMaxVector(const vec3& v) const { return vec3(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z); }
+	LFORCEINLINE vec3 getMinVector(const vec3& v) const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 v1  = _mm_setr_ps(x, y, z, 0.0f);
+		const __m128 v2  = _mm_setr_ps(v.x, v.y, v.z, 0.0f);
+		const __m128 vec = _mm_min_ps(v1, v2);
+		return *(vec3*)&vec;
+#else
+		return vec3(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z);
+#endif // LMATH_USE_SSE4
+	}
+
+	LFORCEINLINE vec3 getMaxVector(const vec3& v) const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 v1  = _mm_setr_ps(x, y, z, 0.0f);
+		const __m128 v2  = _mm_setr_ps(v.x, v.y, v.z, 0.0f);
+		const __m128 vec = _mm_max_ps(v1, v2);
+		return *(vec3*)&vec;
+#else
+		return vec3(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z);
+#endif // LMATH_USE_SSE4
+	}
 
 	vec3 getOrthogonalVector() const
 	{
