@@ -13,6 +13,15 @@
 
 #pragma once
 
+#if defined(__SSE4_1__)
+#	define LMATH_USE_SSE4 1
+#endif // __SSE4_1__
+
+#if defined(LMATH_USE_SSE4)
+#	include <xmmintrin.h>
+#	include <smmintrin.h>
+#endif // LMATH_USE_SSE4
+
 #include "lmath/Math.h"
 
 namespace ldr
@@ -298,7 +307,17 @@ class vec3
 	LFORCEINLINE float* toFloatPtr() { return &x; }
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 
-	LFORCEINLINE bool isZeroVector(float eps) const { return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps; }
+	LFORCEINLINE bool isZeroVector(float eps) const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec  = _mm_setr_ps(x, y, z, 0.0f);
+		const __m128 abs  = _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), vec), vec);
+		const __m128i cmp = _mm_castps_si128(_mm_cmpge_ps(abs, _mm_set1_ps(eps)));
+		return _mm_testz_si128(cmp, cmp) != 0;
+#else
+		return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps;
+#endif // LMATH_USE_SSE4
+	}
 
 	LFORCEINLINE vec3& saturate()
 	{
@@ -656,7 +675,14 @@ class vec4
 
 	LFORCEINLINE bool isZeroVector(float eps) const
 	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec  = _mm_loadu_ps(&x);
+		const __m128 abs  = _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), vec), vec);
+		const __m128i cmp = _mm_castps_si128(_mm_cmpge_ps(abs, _mm_set1_ps(eps)));
+		return _mm_testz_si128(cmp, cmp) != 0;
+#else
 		return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps && std::fabs(w) <= eps;
+#endif // LMATH_USE_SSE4
 	}
 
 	LFORCEINLINE vec4& saturate()
