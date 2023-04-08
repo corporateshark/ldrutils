@@ -132,6 +132,8 @@ class vec2
 	LFORCEINLINE vec2 getMaxVector(const vec2& v) const { return vec2(x > v.x ? x : v.x, y > v.y ? y : v.y); }
 	LFORCEINLINE vec2 getOrthogonalVector() const { return vec2(-y, x); }
 
+	LFORCEINLINE bool isZeroVector(float eps) const { return std::fabs(x) <= eps && std::fabs(y) <= eps; }
+
 	LFORCEINLINE vec2& abs()
 	{
 		x = std::abs(x);
@@ -276,6 +278,8 @@ class vec3
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
+
+	LFORCEINLINE bool isZeroVector(float eps) const { return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps; }
 
 	LFORCEINLINE vec3& abs()
 	{
@@ -562,6 +566,11 @@ class vec4
 		v.normalize();
 		return v;
 	};
+
+	LFORCEINLINE bool isZeroVector(float eps) const
+	{
+		return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps && std::fabs(w) <= eps;
+	}
 
 	LFORCEINLINE vec4& abs()
 	{
