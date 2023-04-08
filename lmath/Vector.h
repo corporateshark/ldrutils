@@ -132,6 +132,13 @@ class vec2
 	LFORCEINLINE vec2 getMaxVector(const vec2& v) const { return vec2(x > v.x ? x : v.x, y > v.y ? y : v.y); }
 	LFORCEINLINE vec2 getOrthogonalVector() const { return vec2(-y, x); }
 
+	LFORCEINLINE vec2& abs()
+	{
+		x = std::abs(x);
+		y = std::abs(y);
+		return *this;
+	}
+
 	/// swizzles
 	LFORCEINLINE vec2 yx() const { return vec2(y, x); };
 };
@@ -268,8 +275,15 @@ class vec3
 
 	LFORCEINLINE const float* toFloatPtr() const { return &x; }
 	LFORCEINLINE float* toFloatPtr() { return &x; }
-
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
+
+	LFORCEINLINE vec3& abs()
+	{
+		x = std::fabs(x);
+		y = std::fabs(y);
+		z = std::fabs(z);
+		return *this;
+	}
 
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
@@ -390,6 +404,15 @@ class vec4i
 	LFORCEINLINE bool operator!=(const vec4i& v) const { return (v.x != x) || (v.y != y) || (v.z != z) || (v.w != w); }
 
 	LFORCEINLINE int dot(const vec4i& v) const { return (x * v.x + y * v.y + z * v.z + w * v.w); }
+
+	vec4i& abs()
+	{
+		x = std::abs(x);
+		y = std::abs(y);
+		z = std::abs(z);
+		w = std::abs(w);
+		return *this;
+	}
 
 	/// swizzles
 	LFORCEINLINE vec2i xy() const { return vec2i(x, y); }
@@ -533,6 +556,15 @@ class vec4
 		v.normalize();
 		return v;
 	};
+
+	LFORCEINLINE vec4& abs()
+	{
+		x = std::fabs(x);
+		y = std::fabs(y);
+		z = std::fabs(z);
+		w = std::fabs(w);
+		return *this;
+	}
 
 	/// swizzles
 	LFORCEINLINE vec4 bgra() const { return vec4(z, y, x, w); };
