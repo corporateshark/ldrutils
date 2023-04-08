@@ -117,6 +117,8 @@ class vec2
 
 	LFORCEINLINE float length() const { return sqrtf(x * x + y * y); };
 	LFORCEINLINE float sqrLength() const { return x * x + y * y; };
+	LFORCEINLINE float sum() const { return x + y; }
+	LFORCEINLINE float avg() const { return (x + y) / 2.0f; }
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec2 getNormalized() const
@@ -187,6 +189,8 @@ class vec2i
 
 	LFORCEINLINE float length() const { return sqrtf(static_cast<float>(x * x + y * y)); };
 	LFORCEINLINE int sqrLength() const { return x * x + y * y; };
+	LFORCEINLINE int sum() const { return x + y; }
+	LFORCEINLINE float avg() const { return float(x + y) / 2.0f; }
 };
 
 class vec3
@@ -306,6 +310,8 @@ class vec3
 
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
+	LFORCEINLINE float sum() const { return x + y + z; }
+	LFORCEINLINE float avg() const { return (x + y + z) / 3.0f; }
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec3 getNormalized() const
@@ -371,6 +377,8 @@ class vec3i
 
 	LFORCEINLINE float length() const { return toVector3().length(); }
 	LFORCEINLINE int sqrLength() const { return x * x + y * y + z * z; }
+	LFORCEINLINE int sum() const { return x + y + z; }
+	LFORCEINLINE float avg() const { return float(x + y + z) / 3.0f; }
 
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 };
@@ -573,6 +581,8 @@ class vec4
 
 	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
 	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
+	LFORCEINLINE float sum() const { return x + y + z + w; }
+	LFORCEINLINE float avg() const { return (x + y + z + w) / 4.0f; }
 	LFORCEINLINE void normalize() { *this /= length(); }
 
 	LFORCEINLINE vec4 getNormalized() const
