@@ -342,12 +342,48 @@ class vec3
 
 	LFORCEINLINE size_t getMaximumComponentIndex() const { return x > y ? (x > z ? 0 : 2) : (y > z ? 1 : 2); }
 	LFORCEINLINE size_t getMinimumComponentIndex() const { return x < y ? (x < z ? 0 : 2) : (y < z ? 1 : 2); }
+	LFORCEINLINE size_t getMaximumComponentAbsIndex() const
+	{
+		using std::fabs;
+		return fabs(x) > fabs(y) ? (fabs(x) > fabs(z) ? 0 : 2) : (fabs(y) > fabs(z) ? 1 : 2);
+	}
+	LFORCEINLINE size_t getMinimumComponentAbsIndex() const
+	{
+		using std::fabs;
+		return fabs(x) < fabs(y) ? (fabs(x) < fabs(z) ? 0 : 2) : (fabs(y) < fabs(z) ? 1 : 2);
+	}
 
 	LFORCEINLINE float getMaximumComponent() const { return x > y ? (x > z ? x : z) : (y > z ? y : z); }
 	LFORCEINLINE float getMinimumComponent() const { return x < y ? (x < z ? x : z) : (y < z ? y : z); }
+	LFORCEINLINE float getMaximumComponentAbs() const
+	{
+		using std::fabs;
+		return fabs(x) > fabs(y) ? (fabs(x) > fabs(z) ? fabs(x) : fabs(z)) : (fabs(y) > fabs(z) ? fabs(y) : fabs(z));
+	}
+	LFORCEINLINE float getMinimumComponentAbs() const
+	{
+		using std::fabs;
+		return fabs(x) < fabs(y) ? (fabs(x) < fabs(z) ? fabs(x) : fabs(z)) : (fabs(y) < fabs(z) ? fabs(y) : fabs(z));
+	}
 
 	LFORCEINLINE vec3 getMinVector(const vec3& v) const { return vec3(x < v.x ? x : v.x, y < v.y ? y : v.y, z < v.z ? z : v.z); }
 	LFORCEINLINE vec3 getMaxVector(const vec3& v) const { return vec3(x > v.x ? x : v.x, y > v.y ? y : v.y, z > v.z ? z : v.z); }
+
+	vec3 getOrthogonalVector() const
+	{
+		if (getMaximumComponentAbs() < LMATH_EPSILON) {
+			return vec3(1.0f, 0.0f, 1.0f);
+		}
+
+		switch (getMaximumComponentAbsIndex()) {
+		case 0:
+			return vec3(-(z + y) / x, 1.0f, 1.0f);
+		case 1:
+			return vec3(1.0f, -(z + x) / y, 1.0f);
+		default:
+			return vec3(1.0f, 1.0f, -(x + y) / z);
+		}
+	}
 
 	/// swizzles
 	LFORCEINLINE vec3 xzy() const { return vec3(x, z, y); }
