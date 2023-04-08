@@ -134,6 +134,13 @@ class vec2
 
 	LFORCEINLINE bool isZeroVector(float eps) const { return std::fabs(x) <= eps && std::fabs(y) <= eps; }
 
+	LFORCEINLINE vec2& saturate()
+	{
+		x = ldr::clamp(x, 0.0f, 1.0f);
+		y = ldr::clamp(y, 0.0f, 1.0f);
+		return *this;
+	}
+
 	LFORCEINLINE vec2& abs()
 	{
 		x = std::abs(x);
@@ -280,6 +287,14 @@ class vec3
 	LFORCEINLINE vec2 toVector2() const { return vec2(x, y); }
 
 	LFORCEINLINE bool isZeroVector(float eps) const { return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps; }
+
+	LFORCEINLINE vec3& saturate()
+	{
+		x = ldr::clamp(x, 0.0f, 1.0f);
+		y = ldr::clamp(y, 0.0f, 1.0f);
+		z = ldr::clamp(z, 0.0f, 1.0f);
+		return *this;
+	}
 
 	LFORCEINLINE vec3& abs()
 	{
@@ -570,6 +585,15 @@ class vec4
 	LFORCEINLINE bool isZeroVector(float eps) const
 	{
 		return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps && std::fabs(w) <= eps;
+	}
+
+	LFORCEINLINE vec4& saturate()
+	{
+		x = ldr::clamp(x, 0.0f, 1.0f);
+		y = ldr::clamp(y, 0.0f, 1.0f);
+		z = ldr::clamp(z, 0.0f, 1.0f);
+		w = ldr::clamp(w, 0.0f, 1.0f);
+		return *this;
 	}
 
 	LFORCEINLINE vec4& abs()
