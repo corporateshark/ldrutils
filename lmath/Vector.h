@@ -335,8 +335,24 @@ class vec3
 		return *this;
 	}
 
-	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z); }
-	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z; }
+	LFORCEINLINE float length() const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec = _mm_setr_ps(x, y, z, 0.0f);
+		return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(vec, vec, 0x71)));
+#else
+		return sqrtf(x * x + y * y + z * z);
+#endif // LMATH_USE_SSE4
+	}
+	LFORCEINLINE float sqrLength() const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec = _mm_setr_ps(x, y, z, 0.0f);
+		return _mm_cvtss_f32(_mm_dp_ps(vec, vec, 0x71));
+#else
+		return x * x + y * y + z * z;
+#endif // LMATH_USE_SSE4
+	}
 	LFORCEINLINE float sum() const { return x + y + z; }
 	LFORCEINLINE float avg() const { return (x + y + z) / 3.0f; }
 	LFORCEINLINE float stdDev() const
@@ -668,8 +684,24 @@ class vec4
 	LFORCEINLINE vec3 toVector3() const { return vec3(x, y, z); }
 	LFORCEINLINE vec4i toVector4i() const { return vec4i(x, y, z, w); }
 
-	LFORCEINLINE float length() const { return sqrt(x * x + y * y + z * z + w * w); }
-	LFORCEINLINE float sqrLength() const { return x * x + y * y + z * z + w * w; }
+	LFORCEINLINE float length() const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec = _mm_setr_ps(x, y, z, w);
+		return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(vec, vec, 0xFF)));
+#else
+		return sqrtf(x * x + y * y + z * z + w * w);
+#endif
+	}
+	LFORCEINLINE float sqrLength() const
+	{
+#if defined(LMATH_USE_SSE4)
+		const __m128 vec = _mm_setr_ps(x, y, z, w);
+		return _mm_cvtss_f32(_mm_dp_ps(vec, vec, 0xFF));
+#else
+		return x * x + y * y + z * z + w * w;
+#endif
+	}
 	LFORCEINLINE float sum() const { return x + y + z + w; }
 	LFORCEINLINE float avg() const { return (x + y + z + w) / 4.0f; }
 	LFORCEINLINE float stdDev() const
