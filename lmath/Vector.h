@@ -330,14 +330,10 @@ class vec3
 	LFORCEINLINE vec3& abs()
 	{
 #if defined(LMATH_USE_SSE4)
-		const __m128 signBits = {
-			.m128_u32 = {0x80000000, 0x80000000, 0x80000000, 0x80000000}
-		};
+		const __m128 signBits = _mm_castsi128_ps(_mm_set1_epi32(0x80000000));
 		const __m128 vec = _mm_andnot_ps(signBits, _mm_setr_ps(x, y, z, 0.0f));
 
-		x = vec.m128_f32[0];
-		y = vec.m128_f32[1];
-		z = vec.m128_f32[2];
+		*this = vec3((float*)&vec);
 #else
 		x = std::fabs(x);
 		y = std::fabs(y);
@@ -381,9 +377,7 @@ class vec3
 		__m128 vec = _mm_setr_ps(x, y, z, 0.0f);
 		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0x7F)));
 
-		x = vec.m128_f32[0];
-		y = vec.m128_f32[1];
-		z = vec.m128_f32[2];
+		*this = vec3((float*)&vec);
 #else
 		*this /= length();
 #endif // LMATH_USE_SSE4
@@ -753,10 +747,7 @@ class vec4
 		__m128 vec = _mm_setr_ps(x, y, z, w);
 		vec        = _mm_div_ps(vec, _mm_sqrt_ps(_mm_dp_ps(vec, vec, 0xFF)));
 
-		x = vec.m128_f32[0];
-		y = vec.m128_f32[1];
-		z = vec.m128_f32[2];
-		w = vec.m128_f32[3];
+		*this = vec4((float*)&vec);
 #else
 		*this /= length();
 #endif
