@@ -4,9 +4,9 @@
  *
  * CVars
  *
- * \version 1.0.0
- * \date 08/06/2022
- * \author Sergey Kosarevsky, 2022
+ * \version 1.0.1
+ * \date 11/06/2023
+ * \author Sergey Kosarevsky, 2022-2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/lutils
  */
@@ -17,7 +17,7 @@
 #	include <strings.h>
 #endif
 
-#if defined(ANDROID) || defined(__APPLE__)
+#if defined(ANDROID) || defined(__APPLE__) || defined(__linux__)
 #	define stricmp strcasecmp
 #endif
 
