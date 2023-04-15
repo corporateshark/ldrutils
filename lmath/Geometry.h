@@ -80,4 +80,14 @@ inline vec3 getBarycentricCoordinates(const vec3* pts, vec3 p)
 	return vec3(1.0f - v - w, v, w);
 }
 
+LFORCEINLINE vec3 quantizeFloor(const vec3& v, float scale)
+{
+	return vec3(floor(v.x / scale) * scale, floor(v.y / scale) * scale, floor(v.z / scale) * scale);
+}
+
+LFORCEINLINE vec3 quantizeCeil(const vec3& v, float scale)
+{
+	return vec3(ceil(v.x / scale) * scale, ceil(v.y / scale) * scale, ceil(v.z / scale) * scale);
+}
+
 } // namespace ldr
