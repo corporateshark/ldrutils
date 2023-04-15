@@ -844,9 +844,14 @@ LFORCEINLINE vec4 normalize(const vec4& v)
 	return v / v.length();
 }
 
-LFORCEINLINE vec3 cross(const vec3& a, const vec3& b)
+LFORCEINLINE vec3 cross(const vec3& v1, const vec3& v2)
 {
-	return a.cross(b);
+	return v1.cross(v2);
+}
+
+LFORCEINLINE float dot(const vec3& v1, const vec3& v2)
+{
+	return v1.dot(v2);
 }
 
 inline vec2 lerp(const vec2& v1, const vec2& v2, float t)
@@ -882,6 +887,15 @@ inline vec4 lerp(const vec4& v1, const vec4& v2, float t)
 	}
 }
 
+LFORCEINLINE vec4 clamp(const vec4& v, const vec4& minVal, const vec4& maxVal)
+{
+	return vec4(
+		clamp(v.x, minVal.x, maxVal.x),
+		clamp(v.y, minVal.y, maxVal.y),
+		clamp(v.z, minVal.z, maxVal.z),
+		clamp(v.w, minVal.w, maxVal.w));
+}
+
 // 32-bit RGBA colors, etc
 class vec4b
 {
@@ -911,3 +925,13 @@ class vec4b
 };
 
 } // namespace ldr
+
+#if defined(LMATH_USE_SHORTCUT_TYPES)
+using vec2 = ldr::vec2;
+using vec3 = ldr::vec3;
+using vec4 = ldr::vec4;
+using vec2i = ldr::vec2i;
+using vec3i = ldr::vec3i;
+using vec4i = ldr::vec4i;
+using vec4b = ldr::vec4b;
+#endif // LMATH_USE_SHORTCUT_TYPES
