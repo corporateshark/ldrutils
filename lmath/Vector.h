@@ -845,6 +845,11 @@ LFORCEINLINE vec3 cross(const vec3& v1, const vec3& v2)
 	return v1.cross(v2);
 }
 
+LFORCEINLINE float dot(const vec2& v1, const vec2& v2)
+{
+	return v1.dot(v2);
+}
+
 LFORCEINLINE float dot(const vec3& v1, const vec3& v2)
 {
 	return v1.dot(v2);
