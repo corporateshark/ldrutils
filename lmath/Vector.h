@@ -13,16 +13,12 @@
 
 #pragma once
 
-#if defined(__SSE4_1__)
-#	define LMATH_USE_SSE4 1
-#endif // __SSE4_1__
+#include "lmath/Math.h"
 
 #if defined(LMATH_USE_SSE4)
 #	include <xmmintrin.h>
 #	include <smmintrin.h>
 #endif // LMATH_USE_SSE4
-
-#include "lmath/Math.h"
 
 namespace ldr
 {

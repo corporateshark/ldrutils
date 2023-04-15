@@ -26,3 +26,7 @@
 #	define LFORCEINLINE inline
 #	define LFORCEINLINE_LAMBDA
 #endif
+
+#if defined(__SSE4_1__) || defined(__AVX__) || defined(__AVX2__)
+#	define LMATH_USE_SSE4 1
+#endif // __SSE4_1__
