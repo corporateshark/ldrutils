@@ -41,6 +41,24 @@ class mat3
 	LFORCEINLINE vec3& operator[](size_t idx) { return m[idx]; };
 	LFORCEINLINE const vec3& operator[](size_t idx) const { return m[idx]; };
 
+	LFORCEINLINE mat3 operator+(const mat3& mat) const
+	{
+		mat3 r;
+
+		for (size_t i = 0; i != 3; i++)
+			for (size_t j = 0; j != 3; j++)
+				r[i][j] = m[i][j] + mat[i][j];
+
+		return r;
+	}
+	LFORCEINLINE vec3 operator*(const vec3& v) const
+	{
+		const float x = m[0].x * v.x + m[1].x * v.y + m[2].x * v.z;
+		const float y = m[0].y * v.x + m[1].y * v.y + m[2].y * v.z;
+		const float z = m[0].z * v.x + m[1].z * v.y + m[2].z * v.z;
+		return vec3(x, y, z);
+	}
+
 	LFORCEINLINE const float* toFloatPtr() const { return m[0].toFloatPtr(); };
 	LFORCEINLINE float* toFloatPtr() { return m[0].toFloatPtr(); };
 
