@@ -60,5 +60,26 @@ mat3 mat3::getInversed() const
 	return inv;
 }
 
+void mat3::transpose()
+{
+	for (size_t i = 0; i != 3; i++) {
+		for (size_t j = 0; j != 3; j++) {
+			const float tmp = m[i][j];
+			m[i][j]         = m[j][i];
+			m[j][i]         = tmp;
+		}
+	}
+}
+
+mat3 mat3::getTransposed() const
+{
+	mat3 t;
+
+	for (size_t i = 0; i != 3; i++)
+		for (size_t j = 0; j != 3; j++)
+			t[i][j] = m[j][i];
+
+	return t;
+}
 
 } // namespace ldr

@@ -60,6 +60,9 @@ class mat3
 
 	void inverse();
 	mat3 getInversed() const;
+
+	void transpose();
+	mat3 getTransposed() const;
 };
 
 } // namespace ldr
