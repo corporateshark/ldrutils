@@ -82,4 +82,22 @@ mat3 mat3::getTransposed() const
 	return t;
 }
 
+void mat3::orthonormalize()
+{
+	m[0].normalize();
+	m[2] = m[0].cross(m[1]);
+	m[2].normalize();
+	m[1] = m[2].cross(m[0]);
+	m[1].normalize();
+}
+
+mat3 mat3::getOrthonormalized() const
+{
+	mat3 n(*this);
+
+	n.orthonormalize();
+
+	return n;
+}
+
 } // namespace ldr

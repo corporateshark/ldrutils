@@ -63,6 +63,9 @@ class mat3
 
 	void transpose();
 	mat3 getTransposed() const;
+
+	void orthonormalize();
+	mat3 getOrthonormalized() const;
 };
 
 } // namespace ldr
