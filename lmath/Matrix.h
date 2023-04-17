@@ -57,6 +57,9 @@ class mat3
 		m[2] = vec3(0, 0, 1);
 	};
 	LFORCEINLINE static mat3 getIdentity() { return mat3(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)); };
+
+	void inverse();
+	mat3 getInversed() const;
 };
 
 } // namespace ldr
