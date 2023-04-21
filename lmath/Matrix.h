@@ -85,6 +85,8 @@ class mat3
 
 	void orthonormalize();
 	mat3 getOrthonormalized() const;
+
+	static mat3 getRotateAngleAxis(float angleRad, const vec3& axisNormalized);
 };
 
 mat3 mat3::operator*(const mat3& m) const

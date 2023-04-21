@@ -100,4 +100,39 @@ mat3 mat3::getOrthonormalized() const
 	return n;
 }
 
+// 'v' should be normalized
+mat3 mat3::getRotateAngleAxis(float angleRad, const vec3& v)
+{
+	const float xx = v.x * v.x;
+	const float xy = v.x * v.y;
+	const float xz = v.x * v.z;
+
+	const float yx = xy;
+	const float yy = v.y * v.y;
+	const float yz = v.y * v.z;
+
+	const float zx = xz;
+	const float zy = yz;
+	const float zz = v.z * v.z;
+
+	const float co = cosf(angleRad);
+	const float si = sinf(angleRad);
+
+	mat3 m;
+
+	m[0][0] = xx + (1.0f - xx) * co;
+	m[0][1] = xy * (1.0f - co) + v.z * si;
+	m[0][2] = xz * (1.0f - co) - v.y * si;
+
+	m[1][0] = yx * (1.0f - co) - v.z * si;
+	m[1][1] = yy + (1.0f - yy) * co;
+	m[1][2] = yz * (1.0f - co) + v.x * si;
+
+	m[2][0] = zx * (1.0f - co) + v.y * si;
+	m[2][1] = zy * (1.0f - co) - v.x * si;
+	m[2][2] = zz + (1.0f - zz) * co;
+
+	return m;
+}
+
 } // namespace ldr
