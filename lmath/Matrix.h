@@ -106,3 +106,7 @@ mat3 mat3::operator*(const mat3& m) const
 }
 
 } // namespace ldr
+
+#if defined(LMATH_USE_SHORTCUT_TYPES)
+using mat3 = ldr::mat3;
+#endif // LMATH_USE_SHORTCUT_TYPES
