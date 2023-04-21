@@ -58,6 +58,7 @@ class mat3
 		const float z = m[0].z * v.x + m[1].z * v.y + m[2].z * v.z;
 		return vec3(x, y, z);
 	}
+	LFORCEINLINE mat3 operator*(const mat3& m) const;
 
 	LFORCEINLINE const float* toFloatPtr() const { return m[0].toFloatPtr(); };
 	LFORCEINLINE float* toFloatPtr() { return m[0].toFloatPtr(); };
@@ -85,5 +86,23 @@ class mat3
 	void orthonormalize();
 	mat3 getOrthonormalized() const;
 };
+
+mat3 mat3::operator*(const mat3& m) const
+{
+	mat3 result;
+
+	const float* m1 = toFloatPtr();
+	const float* m2 = m.toFloatPtr();
+	float* r        = result.toFloatPtr();
+
+	for (size_t i = 0; i != 3; ++i) {
+		for (size_t j = 0; j != 3; ++j)
+			*r++ = m1[0] * m2[0 * 3 + j] + m1[1] * m2[1 * 3 + j] + m1[2] * m2[2 * 3 + j];
+
+		m1 += 3;
+	}
+
+	return result;
+}
 
 } // namespace ldr
