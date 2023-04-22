@@ -263,9 +263,21 @@ inline bool operator!=(const mat4& m1, const mat4& m2)
 	return false;
 }
 
+class mat3x4
+{
+ public:
+	vec3 m[4];
+
+	LFORCEINLINE explicit mat3x4(const mat4& m)
+	: m{ m[0].toVector3(), m[1].toVector3(), m[2].toVector3(), m[3].toVector3() }
+	{
+	}
+};
+
 } // namespace ldr
 
 #if defined(LMATH_USE_SHORTCUT_TYPES)
 using mat3 = ldr::mat3;
 using mat4 = ldr::mat4;
+using mat3x4 = ldr::mat3x4;
 #endif // LMATH_USE_SHORTCUT_TYPES
