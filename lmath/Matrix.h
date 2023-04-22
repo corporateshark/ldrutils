@@ -15,6 +15,10 @@
 
 #include "lmath/Vector.h"
 
+#if defined(LMATH_USE_AVX2)
+#	include <immintrin.h>
+#endif // LMATH_USE_AVX2
+
 namespace ldr
 {
 

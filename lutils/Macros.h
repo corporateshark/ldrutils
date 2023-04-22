@@ -4,8 +4,6 @@
  *
  * Useful macros - utils
  *
- * \version 1.0.0
- * \date 03/03/2023
  * \author Sergey Kosarevsky, 2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/lutils
@@ -30,3 +28,7 @@
 #if defined(__SSE4_1__) || defined(__AVX__) || defined(__AVX2__)
 #	define LMATH_USE_SSE4 1
 #endif // __SSE4_1__
+
+#if defined(__AVX2__)
+#	define LMATH_USE_AVX2 1
+#endif // __AVX2__
