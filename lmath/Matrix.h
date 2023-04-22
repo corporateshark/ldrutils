@@ -27,9 +27,9 @@ class mat3
 	mat3(){}; // do not default-initialize
 	LFORCEINLINE explicit mat3(float a)
 	{
-		m[0] = vec3(a);
-		m[1] = vec3(a);
-		m[2] = vec3(a);
+		m[0] = vec3(a, 0.0f, 0.0f);
+		m[1] = vec3(0.0f, a, 0.0f);
+		m[2] = vec3(0.0f, 0.0f, a);
 	};
 	LFORCEINLINE mat3(const vec3& x, const vec3& y, const vec3& z)
 	{
