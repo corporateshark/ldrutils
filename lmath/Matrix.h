@@ -93,7 +93,7 @@ class mat3
 	static mat3 getRotateAngleAxis(float angleRad, const vec3& axisNormalized);
 	static mat3 getRotate(const vec3& v1, const vec3& v2);
 
-	bool isEqual(const mat3& other, float eps = LMATH_EPSILON) const
+	inline bool isEqual(const mat3& other, float eps = LMATH_EPSILON) const
 	{
 		for (size_t i = 0; i != 3; ++i) {
 			for (size_t j = 0; j != 3; ++j) {
@@ -207,7 +207,58 @@ class mat4
 		m.makeIdentity();
 		return m;
 	};
+	inline bool isIdentity(float eps = LMATH_EPSILON) const
+	{
+		const mat4 identity = mat4::getIdentity();
+
+		for (size_t i = 0; i != 4; ++i) {
+			for (size_t j = 0; j != 4; ++j) {
+				if (absf(m[i][j] - identity[i][j]) > eps)
+					return false;
+			}
+		}
+		return true;
+	}
+
+	inline bool isEqual(const mat4& other, float eps = LMATH_EPSILON) const
+	{
+		for (size_t i = 0; i != 4; ++i) {
+			for (size_t j = 0; j != 4; ++j) {
+				if (absf(m[i][j] - other[i][j]) > eps)
+					return false;
+			}
+		}
+		return true;
+	}
 };
+
+inline bool operator==(const mat4& m1, const mat4& m2)
+{
+	const float* m1Ptr = m1.toFloatPtr();
+	const float* m2Ptr = m2.toFloatPtr();
+
+	for (size_t i = 0; i != 16; ++i) {
+		if (m1Ptr[i] != m2Ptr[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+inline bool operator!=(const mat4& m1, const mat4& m2)
+{
+	const float* m1Ptr = m1.toFloatPtr();
+	const float* m2Ptr = m2.toFloatPtr();
+
+	for (size_t i = 0; i != 16; ++i) {
+		if (m1Ptr[i] != m2Ptr[i]) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 } // namespace ldr
 
