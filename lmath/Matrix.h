@@ -154,6 +154,9 @@ public:
 
 		return r;
 	}
+
+	LFORCEINLINE const float* toFloatPtr() const { return m[0].toFloatPtr(); };
+	LFORCEINLINE float* toFloatPtr() { return m[0].toFloatPtr(); };
 };
 
 } // namespace ldr
