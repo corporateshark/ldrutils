@@ -119,6 +119,43 @@ mat3 mat3::operator*(const mat3& m) const
 	return result;
 }
 
+class mat4
+{
+public:
+	vec4 m[4];
+
+public:
+	mat4(){}; // do not default-initialize
+	LFORCEINLINE explicit mat4(float a)
+	{
+		m[0] = vec4(a, 0.0f, 0.0f, 0.0f);
+		m[1] = vec4(0.0f, a, 0.0f, 0.0f);
+		m[2] = vec4(0.0f, 0.0f, a, 0.0f);
+		m[3] = vec4(0.0f, 0.0f, 0.0f, a);
+	};
+	LFORCEINLINE mat4(const vec4& x, const vec4& y, const vec4& z, const vec4& w)
+	{
+		m[0] = x;
+		m[1] = y;
+		m[2] = z;
+		m[3] = w;
+	};
+
+	LFORCEINLINE vec4& operator[](size_t idx) { return m[idx]; };
+	LFORCEINLINE const vec4& operator[](size_t idx) const { return m[idx]; };
+
+	LFORCEINLINE mat4 operator+(const mat4& mat) const
+	{
+		mat4 r;
+
+		for (size_t i = 0; i != 4; i++)
+			for (size_t j = 0; j != 4; j++)
+				r[i][j] = m[i][j] + mat[i][j];
+
+		return r;
+	}
+};
+
 } // namespace ldr
 
 #if defined(LMATH_USE_SHORTCUT_TYPES)
