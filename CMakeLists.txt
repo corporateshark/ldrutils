@@ -2,8 +2,14 @@
 
 project("LUtils" CXX C)
 
+if(APPLE)
+	set(LMATH_ENABLE_AVX2 OFF CACHE BOOL "")
+endif()
+
 option(LMATH_USE_SHORTCUT_TYPES "Use lmath vector types without the namespace" OFF)
 option(LMATH_ENABLE_TESTS "Enable tests" OFF)
+option(LMATH_ENABLE_AVX   "Enable AVX"    ON)
+option(LMATH_ENABLE_AVX2  "Enable AVX2"   ON)
 
 file(GLOB SRC_FILES LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} lutils/*.cpp lmath/*.cpp)
 file(GLOB HEADER_FILES LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} lutils/*.h lmath/*.h)
@@ -17,6 +23,20 @@ set_property(TARGET LUtils PROPERTY CXX_STANDARD_REQUIRED ON)
 
 if(LMATH_USE_SHORTCUT_TYPES)
 	target_compile_definitions(LUtils PUBLIC LMATH_USE_SHORTCUT_TYPES=1)
+endif()
+
+if(LMATH_ENABLE_AVX2)
+	if(MSVC)
+		target_compile_options(LUtils PUBLIC /arch:AVX2)
+	else()
+		target_compile_options(LUtils PUBLIC -mavx2)
+	endif()
+elseif(LMATH_ENABLE_AVX)
+	if(MSVC)
+		target_compile_options(LUtils PUBLIC /arch:AVX)
+	else()
+		target_compile_options(LUtils PUBLIC -mavx)
+	endif()
 endif()
 
 if(LMATH_ENABLE_TESTS)

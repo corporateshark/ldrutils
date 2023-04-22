@@ -21,6 +21,29 @@
 namespace ltests
 {
 
+GTEST_TEST(lmath, lmath_status)
+{
+#if defined(LMATH_USE_SSE4)
+	printf("SSE4: on\n");
+#else
+	printf("SSE4: off\n");
+#endif // LMATH_USE_SSE4
+
+#if defined(LMATH_USE_AVX)
+	printf("AVX : on\n");
+#else
+	printf("AVX : off\n");
+#endif // LMATH_USE_AVX
+
+#if defined(LMATH_USE_AVX2)
+	printf("AVX2: on\n");
+#else
+	printf("AVX2: off\n");
+#endif // LMATH_USE_AVX2
+
+	ASSERT_TRUE(true);
+}
+
 GTEST_TEST(lmath, vec2_constructors)
 {
 	const float value = 32167.0f;

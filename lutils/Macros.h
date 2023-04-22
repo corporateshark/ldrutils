@@ -11,6 +11,8 @@
 
 #pragma once
 
+// clang-format off
+
 #if defined(_MSC_VER)
 #	define LRESTRICT __restrict
 #	define LFORCEINLINE __forceinline
@@ -29,6 +31,12 @@
 #	define LMATH_USE_SSE4 1
 #endif // __SSE4_1__
 
+#if defined(__AVX__) || defined(__AVX2__)
+#	define LMATH_USE_AVX 1
+#endif // __AVX__
+
 #if defined(__AVX2__)
 #	define LMATH_USE_AVX2 1
 #endif // __AVX2__
+
+// clang-format on
