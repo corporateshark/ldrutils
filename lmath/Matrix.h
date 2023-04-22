@@ -230,6 +230,9 @@ class mat4
 		}
 		return true;
 	}
+
+	void transpose();
+	mat4 getTransposed() const;
 };
 
 inline bool operator==(const mat4& m1, const mat4& m2)

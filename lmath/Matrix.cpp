@@ -160,4 +160,26 @@ mat3 mat3::getRotate(const vec3& v1, const vec3& v2)
 	return m;
 }
 
+void mat4::transpose()
+{
+	for (size_t i = 0; i != 4; i++) {
+		for (size_t j = 0; j != 4; j++) {
+			const float tmp = m[i][j];
+			m[i][j]         = m[j][i];
+			m[j][i]         = tmp;
+		}
+	}
+}
+
+mat4 mat4::getTransposed() const
+{
+	mat4 t;
+
+	for (size_t i = 0; i != 4; i++)
+		for (size_t j = 0; j != 4; j++)
+			t[i][j] = m[j][i];
+
+	return t;
+}
+
 } // namespace ldr
