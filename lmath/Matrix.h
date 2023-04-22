@@ -161,10 +161,57 @@ class mat4
 
 	LFORCEINLINE const float* toFloatPtr() const { return m[0].toFloatPtr(); };
 	LFORCEINLINE float* toFloatPtr() { return m[0].toFloatPtr(); };
+
+	LFORCEINLINE void makeZero()
+	{
+#if defined(LMATH_USE_AVX2)
+		float* a = this->toFloatPtr();
+		const __m256 zero = _mm256_setzero_ps();
+		_mm256_storeu_ps(a + 0, zero);
+		_mm256_storeu_ps(a + 8, zero);
+#elif defined(LMATH_USE_SSE4)
+		float* a = this->toFloatPtr();
+		const __m128 zero = _mm_setzero_ps();
+		_mm_storeu_ps(a + 0, zero);
+		_mm_storeu_ps(a + 4, zero);
+		_mm_storeu_ps(a + 8, zero);
+		_mm_storeu_ps(a + 12, zero);
+#else
+		for (size_t i = 0; i != 4; ++i) {
+			m[i] = vec4(0);
+		}
+#endif // LMATH_USE_SSE4
+	}
+	LFORCEINLINE void makeIdentity()
+	{
+#if defined(LMATH_USE_AVX2)
+		float* a = this->toFloatPtr();
+		_mm256_storeu_ps(a + 0, _mm256_setr_ps(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f));
+		_mm256_storeu_ps(a + 8, _mm256_setr_ps(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f));
+#elif defined(LMATH_USE_SSE4)
+		float* a = this->toFloatPtr();
+		_mm_storeu_ps(a + 0, _mm_setr_ps(1.0f, 0.0f, 0.0f, 0.0f));
+		_mm_storeu_ps(a + 4, _mm_setr_ps(0.0f, 1.0f, 0.0f, 0.0f));
+		_mm_storeu_ps(a + 8, _mm_setr_ps(0.0f, 0.0f, 1.0f, 0.0f));
+		_mm_storeu_ps(a + 12, _mm_setr_ps(0.0f, 0.0f, 0.0f, 1.0f));
+#else
+		m[0] = vec4(1.0f, 0.0f, 0.0f, 0.0f);
+		m[1] = vec4(0.0f, 1.0f, 0.0f, 0.0f);
+		m[2] = vec4(0.0f, 0.0f, 1.0f, 0.0f);
+		m[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+#endif // LMATH_USE_SSE4
+	}
+	LFORCEINLINE static mat4 getIdentity()
+	{
+		mat4 m;
+		m.makeIdentity();
+		return m;
+	};
 };
 
 } // namespace ldr
 
 #if defined(LMATH_USE_SHORTCUT_TYPES)
 using mat3 = ldr::mat3;
+using mat4 = ldr::mat4;
 #endif // LMATH_USE_SHORTCUT_TYPES

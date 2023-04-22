@@ -124,6 +124,38 @@ GTEST_TEST(lmath, vec2_functions)
 	ASSERT_TRUE(v1 == v2.yx());
 }
 
+GTEST_TEST(lmath, mat3_zero_identity)
+{
+	mat3 m = mat3::getIdentity();
+
+	ASSERT_TRUE(m[0][0] == 1.0f);
+	ASSERT_TRUE(m[1][1] == 1.0f);
+	ASSERT_TRUE(m[2][2] == 1.0f);
+
+	m.makeZero();
+
+	ASSERT_TRUE(m[0][0] == 0.0f);
+	ASSERT_TRUE(m[1][1] == 0.0f);
+	ASSERT_TRUE(m[2][2] == 0.0f);
+}
+
+GTEST_TEST(lmath, mat4_zero_identity)
+{
+	mat4 m = mat4::getIdentity();
+
+	ASSERT_TRUE(m[0][0] == 1.0f);
+	ASSERT_TRUE(m[1][1] == 1.0f);
+	ASSERT_TRUE(m[2][2] == 1.0f);
+	ASSERT_TRUE(m[3][3] == 1.0f);
+
+	m.makeZero();
+
+	ASSERT_TRUE(m[0][0] == 0.0f);
+	ASSERT_TRUE(m[1][1] == 0.0f);
+	ASSERT_TRUE(m[2][2] == 0.0f);
+	ASSERT_TRUE(m[3][3] == 0.0f);
+}
+
 namespace {
 
 void printMat(const mat3& m)
