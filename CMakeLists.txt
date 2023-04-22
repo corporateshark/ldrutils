@@ -2,7 +2,15 @@
 
 project("LUtils" CXX C)
 
-if(APPLE)
+include(cmake/findavx2.cmake)
+
+LMATH_CHECK_FOR_AVX2()
+
+if(NOT HAVE_AVX)
+	set(LMATH_ENABLE_AVX OFF CACHE BOOL "")
+endif()
+
+if(NOT HAVE_AVX2)
 	set(LMATH_ENABLE_AVX2 OFF CACHE BOOL "")
 endif()
 
