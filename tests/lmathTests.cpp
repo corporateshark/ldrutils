@@ -12,7 +12,11 @@
  */
 
 #include <gtest/gtest.h>
+#include <lmath/Math.h>
+#include <lmath/Matrix.h>
 #include <lmath/Vector.h>
+
+#include <stdio.h>
 
 namespace ltests
 {
@@ -95,6 +99,72 @@ GTEST_TEST(lmath, vec2_functions)
 	v2 = v1.yx();
 	ASSERT_TRUE(v2.x == 2.0f && v2.y == 1.0f);
 	ASSERT_TRUE(v1 == v2.yx());
+}
+
+namespace {
+
+void printMat(const mat3& m)
+{
+	for (size_t i = 0; i != 3; ++i) {
+		for (size_t j = 0; j != 3; ++j) {
+			printf("%8.4f", m[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
+mat3 getRotateRef(const vec3& v1, const vec3& v2)
+{
+	vec3 axis = cross(v1, v2);
+
+	if (axis.length() <= LMATH_EPSILON) {
+		axis = vec3(0.0f, 0.0f, 1.0f);
+	}
+
+	const float cosAngle = dot(v1, v2);
+
+	return mat3::getRotateAngleAxis(acosf(ldr::clamp(cosAngle, -1.0f, 1.0f)), normalize(axis));
+}
+
+void testRotate(const vec3& v1, const vec3& v2, float eps)
+{
+	mat3 m1 = mat3::getRotate(v1, v2);
+	mat3 m2 = getRotateRef(v1, v2);
+
+	if (!m1.isEqual(m2, eps)) {
+		printMat(m1);
+		printMat(m2);
+	}
+
+	ASSERT_TRUE(m1.isEqual(m2, eps));
+}
+
+} // namespace
+
+GTEST_TEST(lmath, mat3_rotate1)
+{
+	const float eps = 0.0000001f;
+	testRotate(vec3(1.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), eps);
+	testRotate(vec3(0.0f, 1.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), eps);
+	testRotate(vec3(0.0f, 0.0f, 1.0f), vec3(1.0f, 0.0f, 0.0f), eps);
+
+	testRotate(vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), eps);
+	testRotate(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), eps);
+	testRotate(vec3(0.0f, 0.0f, 1.0f), vec3(0.0f, 1.0f, 0.0f), eps);
+
+	testRotate(vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 1.0f), eps);
+	testRotate(vec3(0.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 1.0f), eps);
+	testRotate(vec3(0.0f, 0.0f, 1.0f), vec3(0.0f, 0.0f, 1.0f), eps);
+}
+
+GTEST_TEST(lmath, mat3_rotate2)
+{
+	const float eps = 0.000001f;
+	testRotate(normalize(vec3(1.0f, 1.0f, 1.0f)), normalize(-vec3(1.0f, 1.0f, 0.0f)), eps);
+	testRotate(normalize(vec3(1.0f, 1.0f, 0.0f)), normalize(-vec3(0.0f, 1.0f, 1.0f)), eps);
+	testRotate(normalize(vec3(0.0f, 1.0f, 1.0f)), normalize(-vec3(1.0f, 0.0f, 1.0f)), eps);
+	testRotate(normalize(vec3(1.0f, 0.0f, 1.0f)), normalize(-vec3(1.0f, 1.0f, 1.0f)), eps);
 }
 
 } // namespace ltests
