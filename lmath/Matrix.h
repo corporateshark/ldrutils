@@ -72,13 +72,13 @@ class mat3
 		m[0] = vec3(0);
 		m[1] = vec3(0);
 		m[2] = vec3(0);
-	};
+	}
 	LFORCEINLINE void makeIdentity()
 	{
 		m[0] = vec3(1, 0, 0);
 		m[1] = vec3(0, 1, 0);
 		m[2] = vec3(0, 0, 1);
-	};
+	}
 	LFORCEINLINE static mat3 getIdentity() { return mat3(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)); };
 
 	void inverse();
@@ -125,10 +125,10 @@ mat3 mat3::operator*(const mat3& m) const
 
 class mat4
 {
-public:
+ public:
 	vec4 m[4];
 
-public:
+ public:
 	mat4(){}; // do not default-initialize
 	LFORCEINLINE explicit mat4(float a)
 	{
