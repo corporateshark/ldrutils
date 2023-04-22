@@ -87,6 +87,18 @@ class mat3
 	mat3 getOrthonormalized() const;
 
 	static mat3 getRotateAngleAxis(float angleRad, const vec3& axisNormalized);
+	static mat3 getRotate(const vec3& v1, const vec3& v2);
+
+	bool isEqual(const mat3& other, float eps = LMATH_EPSILON) const
+	{
+		for (size_t i = 0; i != 3; ++i) {
+			for (size_t j = 0; j != 3; ++j) {
+				if (absf(m[i][j] - other[i][j]) > eps)
+					return false;
+			}
+		}
+		return true;
+	}
 };
 
 mat3 mat3::operator*(const mat3& m) const
