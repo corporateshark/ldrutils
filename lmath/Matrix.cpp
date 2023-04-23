@@ -2,10 +2,8 @@
  * \file Matrix.cpp
  * \brief
  *
- * mat3
+ * mat3/mat4
  *
- * \version 1.0.0
- * \date 16/04/2023
  * \author Sergey Kosarevsky, 2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/lutils
@@ -160,7 +158,8 @@ mat3 mat3::getRotate(const vec3& v1, const vec3& v2)
 	return m;
 }
 
-namespace {
+namespace
+{
 
 // clang-format off
 LFORCEINLINE float det33(
@@ -333,6 +332,15 @@ mat4 mat4::getScale(const vec3& v)
 	m[2] = vec4(0.0f, 0.0f, v.z, 0.0f);
 	m[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	return m;
+}
+
+mat4 mat4::getFromPitchPanRoll(float degPitch, float degPan, float degRoll)
+{
+	const mat4 roll  = mat4::getRotateAngleAxis(degRoll * LMATH_DTOR, vec3(0, 1, 0));
+	const mat4 pan   = mat4::getRotateAngleAxis(degPan * LMATH_DTOR, vec3(1, 0, 0));
+	const mat4 pitch = mat4::getRotateAngleAxis(degPitch * LMATH_DTOR, vec3(0, 0, 1));
+
+	return pitch * pan * roll;
 }
 
 } // namespace ldr

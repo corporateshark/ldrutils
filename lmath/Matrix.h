@@ -2,10 +2,8 @@
  * \file Matrix.h
  * \brief
  *
- * mat3
+ * mat3/mat4
  *
- * \version 1.0.0
- * \date 16/04/2023
  * \author Sergey Kosarevsky, 2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/lutils
@@ -237,6 +235,7 @@ class mat4
 	static mat4 getRotate(const vec3& v1, const vec3& v2);
 	static mat4 getTranslate(const vec3& v);
 	static mat4 getScale(const vec3& v);
+	static mat4 getFromPitchPanRoll(float degPitch, float degPan, float degRoll);
 
 	inline bool isEqual(const mat4& other, float eps = LMATH_EPSILON) const
 	{
