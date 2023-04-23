@@ -300,11 +300,27 @@ inline mat4 mat4::operator*(const mat4& mat) const
 {
 	mat4 r;
 
-	const float* m1Ptr = toFloatPtr();
-	const float* m2Ptr = mat.toFloatPtr();
+	const float* LRESTRICT m1Ptr = this->toFloatPtr();
+	const float* LRESTRICT m2Ptr = mat.toFloatPtr();
+	float* LRESTRICT RPtr        = r.toFloatPtr();
 
-	float* LRESTRICT RPtr = r.toFloatPtr();
-
+#if defined(LMATH_USE_SSE4)
+	__m128 r1 = _mm_loadu_ps(m2Ptr + 0);
+	__m128 r2 = _mm_loadu_ps(m2Ptr + 4);
+	__m128 r3 = _mm_loadu_ps(m2Ptr + 8);
+	__m128 r4 = _mm_loadu_ps(m2Ptr + 12);
+	for (size_t i = 0; i < 16; i += 4) {
+		__m128 b1 = _mm_set1_ps(m1Ptr[i + 0]);
+		__m128 b2 = _mm_set1_ps(m1Ptr[i + 1]);
+		__m128 b3 = _mm_set1_ps(m1Ptr[i + 2]);
+		__m128 b4 = _mm_set1_ps(m1Ptr[i + 3]);
+		// clang-format off
+		_mm_storeu_ps(RPtr + i, _mm_add_ps(
+			_mm_add_ps(_mm_mul_ps(b1, r1), _mm_mul_ps(b2, r2)),
+			_mm_add_ps(_mm_mul_ps(b3, r3), _mm_mul_ps(b4, r4))));
+		// clang-format on
+	}
+#else
 	for (size_t i = 0; i != 4; i++) {
 		for (size_t j = 0; j != 4; j++) {
 			// clang-format off
@@ -316,6 +332,7 @@ inline mat4 mat4::operator*(const mat4& mat) const
 		}
 		m1Ptr += 4;
 	}
+#endif // LMATH_USE_SSE4
 
 	return r;
 }
