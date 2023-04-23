@@ -168,6 +168,7 @@ class mat4
 	LFORCEINLINE const vec4& operator[](size_t idx) const { return m[idx]; };
 
 	inline mat4 operator+(const mat4& mat) const;
+	inline mat4 operator*(const mat4& mat) const;
 	inline vec4 operator*(const vec4& v) const;
 	inline vec3 operator*(const vec3& v) const;
 
@@ -292,6 +293,30 @@ inline mat4 mat4::operator+(const mat4& mat) const
 	for (size_t i = 0; i != 4; i++)
 		for (size_t j = 0; j != 4; j++)
 			r[i][j] = m[i][j] + mat[i][j];
+
+	return r;
+}
+
+inline mat4 mat4::operator*(const mat4& mat) const
+{
+	mat4 r;
+
+	const float* m1Ptr = toFloatPtr();
+	const float* m2Ptr = mat.toFloatPtr();
+
+	float* LRESTRICT RPtr = r.toFloatPtr();
+
+	for (size_t i = 0; i != 4; i++) {
+		for (size_t j = 0; j != 4; j++) {
+			// clang-format off
+			*RPtr++ = m1Ptr[0] * m2Ptr[0 + j] +
+				       m1Ptr[1] * m2Ptr[4 + j] +
+				       m1Ptr[2] * m2Ptr[8 + j] +
+				       m1Ptr[3] * m2Ptr[12 + j];
+			// clang-format on
+		}
+		m1Ptr += 4;
+	}
 
 	return r;
 }
