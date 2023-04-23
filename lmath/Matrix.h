@@ -28,19 +28,19 @@ class mat3
 	vec3 m[3];
 
  public:
-	mat3(){}; // do not default-initialize
+	mat3() {} // do not default-initialize
 	LFORCEINLINE explicit mat3(float a)
 	{
 		m[0] = vec3(a, 0.0f, 0.0f);
 		m[1] = vec3(0.0f, a, 0.0f);
 		m[2] = vec3(0.0f, 0.0f, a);
-	};
+	}
 	LFORCEINLINE mat3(const vec3& x, const vec3& y, const vec3& z)
 	{
 		m[0] = x;
 		m[1] = y;
 		m[2] = z;
-	};
+	}
 
 	LFORCEINLINE vec3& operator[](size_t idx) { return m[idx]; };
 	LFORCEINLINE const vec3& operator[](size_t idx) const { return m[idx]; };
@@ -129,21 +129,28 @@ class mat4
 	vec4 m[4];
 
  public:
-	mat4(){}; // do not default-initialize
+	mat4() {} // do not default-initialize
 	LFORCEINLINE explicit mat4(float a)
 	{
 		m[0] = vec4(a, 0.0f, 0.0f, 0.0f);
 		m[1] = vec4(0.0f, a, 0.0f, 0.0f);
 		m[2] = vec4(0.0f, 0.0f, a, 0.0f);
 		m[3] = vec4(0.0f, 0.0f, 0.0f, a);
-	};
+	}
 	LFORCEINLINE mat4(const vec4& x, const vec4& y, const vec4& z, const vec4& w)
 	{
 		m[0] = x;
 		m[1] = y;
 		m[2] = z;
 		m[3] = w;
-	};
+	}
+	LFORCEINLINE explicit mat4(const mat3& s)
+	{
+		m[0] = vec4(s.m[0], 0.0f);
+		m[1] = vec4(s.m[1], 0.0f);
+		m[2] = vec4(s.m[2], 0.0f);
+		m[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	}
 
 	LFORCEINLINE vec4& operator[](size_t idx) { return m[idx]; };
 	LFORCEINLINE const vec4& operator[](size_t idx) const { return m[idx]; };
