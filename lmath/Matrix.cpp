@@ -198,6 +198,77 @@ float mat4::det() const
 
 void mat4::inverse()
 {
+#if defined(LMATH_USE_SSE4)
+
+	// the SSE4 matrix inversion code based on ideas from https://lxjk.github.io/2017/09/03/Fast-4x4-Matrix-Inverse-with-SSE-SIMD-Explained.html
+#define MakeShuffleMask(x, y, z, w) (x | (y << 2) | (z << 4) | (w << 6))
+#define Swizzle(vec, x, y, z, w) _mm_shuffle_ps(vec, vec, MakeShuffleMask(x, y, z, w))
+#define Swizzle1(vec, x) _mm_shuffle_ps(vec, vec, MakeShuffleMask(x, x, x, x))
+#define Swizzle_0101(vec) _mm_movelh_ps(vec, vec)
+#define Swizzle_2323(vec) _mm_movehl_ps(vec, vec)
+#define Swizzle_0022(vec) _mm_moveldup_ps(vec)
+#define Swizzle_1133(vec) _mm_movehdup_ps(vec)
+#define VecShuffle(v1, v2, x, y, z, w) _mm_shuffle_ps(v1, v2, MakeShuffleMask(x, y, z, w))
+#define VecShuffle_0101(v1, v2) _mm_movelh_ps(v1, v2)
+#define VecShuffle_2323(v1, v2) _mm_movehl_ps(v2, v1)
+#define Mat2Mul(v1, v2) _mm_add_ps(_mm_mul_ps(v1, Swizzle(v2, 0, 0, 3, 3)), _mm_mul_ps(Swizzle(v1, 2, 3, 0, 1), Swizzle(v2, 1, 1, 2, 2)))
+#define Mat2AdjMul(v1, v2) _mm_sub_ps(_mm_mul_ps(Swizzle(v1, 3, 0, 3, 0), v2), _mm_mul_ps(Swizzle(v1, 2, 1, 2, 1), Swizzle(v2, 1, 0, 3, 2)))
+#define Mat2MulAdj(v1, v2) _mm_sub_ps(_mm_mul_ps(v1, Swizzle(v2, 3, 3, 0, 0)), _mm_mul_ps(Swizzle(v1, 2, 3, 0, 1), Swizzle(v2, 1, 1, 2, 2)))
+
+	float* LRESTRICT ptr = this->toFloatPtr();
+
+	const __m128 v0   = _mm_loadu_ps(ptr + 0);
+	const __m128 v1   = _mm_loadu_ps(ptr + 4);
+	const __m128 v2   = _mm_loadu_ps(ptr + 8);
+	const __m128 v3   = _mm_loadu_ps(ptr + 12);
+	const __m128 A    = VecShuffle_0101(v0, v1);
+	const __m128 C    = VecShuffle_2323(v0, v1);
+	const __m128 B    = VecShuffle_0101(v2, v3);
+	const __m128 D    = VecShuffle_2323(v2, v3);
+	const __m128 detA = _mm_set1_ps(m[0][0] * m[1][1] - m[0][1] * m[1][0]);
+	const __m128 detC = _mm_set1_ps(m[0][2] * m[1][3] - m[0][3] * m[1][2]);
+	const __m128 detB = _mm_set1_ps(m[2][0] * m[3][1] - m[2][1] * m[3][0]);
+	const __m128 detD = _mm_set1_ps(m[2][2] * m[3][3] - m[2][3] * m[3][2]);
+	const __m128 D_C  = Mat2AdjMul(D, C);
+	const __m128 A_B  = Mat2AdjMul(A, B);
+
+	__m128 X_   = _mm_sub_ps(_mm_mul_ps(detD, A), Mat2Mul(B, D_C));
+	__m128 W_   = _mm_sub_ps(_mm_mul_ps(detA, D), Mat2Mul(C, A_B));
+	__m128 Y_   = _mm_sub_ps(_mm_mul_ps(detB, C), Mat2MulAdj(D, A_B));
+	__m128 Z_   = _mm_sub_ps(_mm_mul_ps(detC, B), Mat2MulAdj(A, D_C));
+	__m128 detM = _mm_add_ps(_mm_mul_ps(detA, detD), _mm_mul_ps(detB, detC));
+	__m128 tr   = _mm_mul_ps(A_B, Swizzle(D_C, 0, 2, 1, 3));
+	tr          = _mm_hadd_ps(tr, tr);
+	tr          = _mm_hadd_ps(tr, tr);
+	detM        = _mm_sub_ps(detM, tr);
+
+	const __m128 invDet = _mm_div_ps(_mm_setr_ps(1.f, -1.f, -1.f, 1.f), detM);
+
+	X_ = _mm_mul_ps(X_, invDet);
+	Y_ = _mm_mul_ps(Y_, invDet);
+	Z_ = _mm_mul_ps(Z_, invDet);
+	W_ = _mm_mul_ps(W_, invDet);
+
+	_mm_storeu_ps(ptr + 0, VecShuffle(X_, Z_, 3, 1, 3, 1));
+	_mm_storeu_ps(ptr + 4, VecShuffle(X_, Z_, 2, 0, 2, 0));
+	_mm_storeu_ps(ptr + 8, VecShuffle(Y_, W_, 3, 1, 3, 1));
+	_mm_storeu_ps(ptr + 12, VecShuffle(Y_, W_, 2, 0, 2, 0));
+
+#undef MakeShuffleMask
+#undef Swizzle
+#undef Swizzle1
+#undef Swizzle_0101
+#undef Swizzle_2323
+#undef Swizzle_0022
+#undef Swizzle_1133
+#undef VecShuffle
+#undef VecShuffle_0101
+#undef VecShuffle_2323
+#undef Mat2Mul
+#undef Mat2AdjMul
+#undef Mat2MulAdj
+
+#else
 	// 2x2 sub-determinants required to calculate the 4x4 determinant
 	float d2_01_01 = m[0][0] * m[1][1] - m[0][1] * m[1][0];
 	float d2_01_02 = m[0][0] * m[1][2] - m[0][2] * m[1][0];
@@ -270,6 +341,7 @@ void mat4::inverse()
 	m[1][3] = +d3_201_023 * invDet;
 	m[2][3] = -d3_201_013 * invDet;
 	m[3][3] = +d3_201_012 * invDet;
+#endif // LMATH_USE_SSE4
 }
 
 mat4 mat4::getInversed() const
