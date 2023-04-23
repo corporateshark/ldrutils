@@ -172,12 +172,12 @@ class mat4
 	LFORCEINLINE void makeZero()
 	{
 #if defined(LMATH_USE_AVX2)
-		float* a = this->toFloatPtr();
+		float* a          = this->toFloatPtr();
 		const __m256 zero = _mm256_setzero_ps();
 		_mm256_storeu_ps(a + 0, zero);
 		_mm256_storeu_ps(a + 8, zero);
 #elif defined(LMATH_USE_SSE4)
-		float* a = this->toFloatPtr();
+		float* a          = this->toFloatPtr();
 		const __m128 zero = _mm_setzero_ps();
 		_mm_storeu_ps(a + 0, zero);
 		_mm_storeu_ps(a + 4, zero);
@@ -226,6 +226,11 @@ class mat4
 		}
 		return true;
 	}
+
+	static mat4 getRotateAngleAxis(float angleRad, const vec3& axisNormalized);
+	static mat4 getRotate(const vec3& v1, const vec3& v2);
+	static mat4 getTranslate(const vec3& v);
+	static mat4 getScale(const vec3& v);
 
 	inline bool isEqual(const mat4& other, float eps = LMATH_EPSILON) const
 	{

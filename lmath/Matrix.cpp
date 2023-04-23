@@ -182,4 +182,35 @@ mat4 mat4::getTransposed() const
 	return t;
 }
 
+mat4 mat4::getRotateAngleAxis(float angleRad, const vec3& axisNormalized)
+{
+	const mat3 m = mat3::getRotateAngleAxis(angleRad, axisNormalized);
+	return mat4(m);
+}
+mat4 mat4::getRotate(const vec3& v1, const vec3& v2)
+{
+	const mat3 m = mat3::getRotate(v1, v2);
+	return mat4(m);
+}
+
+mat4 mat4::getTranslate(const vec3& v)
+{
+	mat4 m;
+	m[0] = vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	m[1] = vec4(0.0f, 1.0f, 0.0f, 0.0f);
+	m[2] = vec4(0.0f, 0.0f, 1.0f, 0.0f);
+	m[3] = vec4(v, 1.0f);
+	return m;
+}
+
+mat4 mat4::getScale(const vec3& v)
+{
+	mat4 m;
+	m[0] = vec4(v.x, 0.0f, 0.0f, 0.0f);
+	m[1] = vec4(0.0f, v.y, 0.0f, 0.0f);
+	m[2] = vec4(0.0f, 0.0f, v.z, 0.0f);
+	m[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	return m;
+}
+
 } // namespace ldr
