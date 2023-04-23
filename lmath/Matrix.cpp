@@ -160,6 +160,43 @@ mat3 mat3::getRotate(const vec3& v1, const vec3& v2)
 	return m;
 }
 
+namespace {
+
+// clang-format off
+LFORCEINLINE float det33(
+	float a11, float a12, float a13,
+	float a21, float a22, float a23,
+	float a31, float a32, float a33)
+{
+	return a11 * (a22 * a33 - a23 * a32) - a12 * (a21 * a33 - a31 * a23) + a13 * (a21 * a32 - a22 * a31);
+}
+// clang-format on
+
+} // namespace
+
+float mat4::det() const
+{
+	// clang-format off
+	float d1 = det33(m[1][1], m[1][2], m[1][3],
+	                 m[2][1], m[2][2], m[2][3],
+	                 m[3][1], m[3][2], m[3][3]);
+
+	float d2 = det33(m[1][0], m[1][2], m[0][3],
+	                 m[2][0], m[2][2], m[2][3],
+	                 m[3][0], m[3][2], m[3][3]);
+
+	float d3 = det33(m[1][0], m[1][1], m[0][3],
+	                 m[2][0], m[2][1], m[2][3],
+	                 m[3][0], m[3][1], m[3][3]);
+
+	float d4 = det33(m[1][0], m[1][1], m[0][2],
+	                 m[2][0], m[2][1], m[2][2],
+	                 m[3][0], m[3][1], m[3][2]);
+	// clang-format on
+
+	return m[0][0] * d1 - m[0][1] * d2 + m[0][2] * d3 - m[0][3] * d4;
+}
+
 void mat4::inverse()
 {
 	// 2x2 sub-determinants required to calculate the 4x4 determinant
