@@ -155,16 +155,9 @@ class mat4
 	LFORCEINLINE vec4& operator[](size_t idx) { return m[idx]; };
 	LFORCEINLINE const vec4& operator[](size_t idx) const { return m[idx]; };
 
-	LFORCEINLINE mat4 operator+(const mat4& mat) const
-	{
-		mat4 r;
-
-		for (size_t i = 0; i != 4; i++)
-			for (size_t j = 0; j != 4; j++)
-				r[i][j] = m[i][j] + mat[i][j];
-
-		return r;
-	}
+	inline mat4 operator+(const mat4& mat) const;
+	inline vec4 operator*(const vec4& v) const;
+	inline vec3 operator*(const vec3& v) const;
 
 	LFORCEINLINE const float* toFloatPtr() const { return m[0].toFloatPtr(); };
 	LFORCEINLINE float* toFloatPtr() { return m[0].toFloatPtr(); };
@@ -253,9 +246,8 @@ inline bool operator==(const mat4& m1, const mat4& m2)
 	const float* m2Ptr = m2.toFloatPtr();
 
 	for (size_t i = 0; i != 16; ++i) {
-		if (m1Ptr[i] != m2Ptr[i]) {
+		if (m1Ptr[i] != m2Ptr[i])
 			return false;
-		}
 	}
 
 	return true;
@@ -267,12 +259,44 @@ inline bool operator!=(const mat4& m1, const mat4& m2)
 	const float* m2Ptr = m2.toFloatPtr();
 
 	for (size_t i = 0; i != 16; ++i) {
-		if (m1Ptr[i] != m2Ptr[i]) {
+		if (m1Ptr[i] != m2Ptr[i])
 			return true;
-		}
 	}
 
 	return false;
+}
+
+inline mat4 mat4::operator+(const mat4& mat) const
+{
+	mat4 r;
+
+	for (size_t i = 0; i != 4; i++)
+		for (size_t j = 0; j != 4; j++)
+			r[i][j] = m[i][j] + mat[i][j];
+
+	return r;
+}
+
+inline vec4 mat4::operator*(const vec4& v) const
+{
+	// clang-format off
+	return vec4(
+		m[0].x * v.x + m[1].x * v.y + m[2].x * v.z + m[3].x * v.w,
+	   m[0].y * v.x + m[1].y * v.y + m[2].y * v.z + m[3].y * v.w,
+	   m[0].z * v.x + m[1].z * v.y + m[2].z * v.z + m[3].z * v.w,
+	   m[0].w * v.x + m[1].w * v.y + m[2].w * v.z + m[3].w * v.w);
+	// clang-format on
+}
+
+inline vec3 mat4::operator*(const vec3& v) const
+{
+	// clang-format off
+	return vec3(
+	   m[0].x * v.x + m[1].x * v.y + m[2].x * v.z + m[3].x,
+	   m[0].y * v.x + m[1].y * v.y + m[2].y * v.z + m[3].y,
+	   m[0].z * v.x + m[1].z * v.y + m[2].z * v.z + m[3].z
+	);
+	// clang-format on
 }
 
 class mat3x4
