@@ -144,6 +144,18 @@ class mat4
 		m[2] = z;
 		m[3] = w;
 	}
+	// clang-format off
+	LFORCEINLINE mat4(float a00, float a01, float a02, float a03,
+	                  float a10, float a11, float a12, float a13,
+	                  float a20, float a21, float a22, float a23,
+	                  float a30, float a31, float a32, float a33)
+	// clang-format on
+	{
+		m[0] = vec4( a00, a01, a02, a03 );
+		m[1] = vec4( a10, a11, a12, a13 );
+		m[2] = vec4( a20, a21, a22, a23 );
+		m[3] = vec4( a30, a31, a32, a33 );
+	};
 	LFORCEINLINE explicit mat4(const mat3& s)
 	{
 		m[0] = vec4(s.m[0], 0.0f);
