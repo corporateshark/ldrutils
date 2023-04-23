@@ -236,6 +236,9 @@ class mat4
 		return true;
 	}
 
+	void inverse();
+	mat4 getInversed() const;
+
 	void transpose();
 	mat4 getTransposed() const;
 
