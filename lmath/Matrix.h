@@ -238,6 +238,8 @@ class mat4
 
 	void transpose();
 	mat4 getTransposed() const;
+
+	LFORCEINLINE mat3 toMat3() const { return mat3(m[0].toVector3(), m[1].toVector3(), m[2].toVector3()); }
 };
 
 inline bool operator==(const mat4& m1, const mat4& m2)
