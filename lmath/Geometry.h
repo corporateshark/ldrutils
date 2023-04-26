@@ -90,4 +90,12 @@ LFORCEINLINE vec3 quantizeCeil(const vec3& v, float scale)
 	return vec3(ceilf(v.x / scale) * scale, ceilf(v.y / scale) * scale, ceilf(v.z / scale) * scale);
 }
 
+inline mat4 convertCameraExtrinsicsToViewMatrix(const vec3& Rv, const vec3& Tv)
+{
+	// lead & mean implementation of cv::Rodrigues()
+	const float theta = Rv.length();
+	const vec3 axis   = Rv / theta;
+	return mat4::getRotateAngleAxis(theta, axis) * mat4::getTranslate(Tv);
+}
+
 } // namespace ldr
