@@ -52,7 +52,7 @@ class plane3
 	, d(-dot(pt, normal)){};
 	/// from 3 points
 	plane3(const vec3& p1, const vec3& p2, const vec3& p3)
-	: plane3(p1, normalize(cross(p2 - p1, p3 - p1))){};
+	: plane3(p1, ldr::normalize(cross(p2 - p1, p3 - p1))){};
 	LFORCEINLINE float operator[](size_t idx) const { return n[idx]; };
 	LFORCEINLINE float& operator[](size_t idx) { return n[idx]; };
 	LFORCEINLINE const float* toFloatPtr() const { return n.toFloatPtr(); }
@@ -63,6 +63,19 @@ class plane3
 
 	LFORCEINLINE void invert() { n = -n; }
 	LFORCEINLINE plane3 getInverted() const { return plane3(-n, d); }
+
+	LFORCEINLINE void normalize()
+	{
+		const float len = n.length();
+		n /= len;
+		d /= len;
+	}
+	LFORCEINLINE plane3 getNormalized() const
+	{
+		plane3 v(*this);
+		v.normalize();
+		return v;
+	}
 
 	LFORCEINLINE float getDistanceToPointSigned(const vec3& pt) const { return n.dot(pt) + d; }
 	LFORCEINLINE float getDistanceToPoint(const vec3& pt) const { return ldr::absf(getDistanceToPointSigned(pt)); }
@@ -77,7 +90,7 @@ class plane3
 	LFORCEINLINE void buildBasis(vec3* v1, vec3* v2) const
 	{
 		*v1 = n.getOrthogonalVector();
-		*v2 = normalize(cross(n, *v1));
+		*v2 = ldr::normalize(cross(n, *v1));
 	}
 
 	/// construct a reflection matrix for this plane
