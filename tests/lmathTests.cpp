@@ -16,6 +16,7 @@
 #include <lmath/Matrix.h>
 #include <lmath/Vector.h>
 #include <lmath/Geometry.h>
+#include <lmath/Blending.h>
 
 #include <stdio.h>
 
