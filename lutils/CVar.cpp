@@ -8,7 +8,7 @@
  * \date 11/06/2023
  * \author Sergey Kosarevsky, 2022-2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
- * https://github.com/corporateshark/lutils
+ * https://github.com/corporateshark/ldrutils
  */
 
 #include "CVar.h"

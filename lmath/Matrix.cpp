@@ -6,7 +6,7 @@
  *
  * \author Sergey Kosarevsky, 2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
- * https://github.com/corporateshark/lutils
+ * https://github.com/corporateshark/ldrutils
  */
 
 #include "lmath/Matrix.h"
