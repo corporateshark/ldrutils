@@ -12,13 +12,14 @@
  */
 
 #include <gtest/gtest.h>
+#include <stdio.h>
+
+#include <lmath/Blending.h>
+#include <lmath/Geometry.h>
 #include <lmath/Math.h>
 #include <lmath/Matrix.h>
+#include <lmath/Plane.h>
 #include <lmath/Vector.h>
-#include <lmath/Geometry.h>
-#include <lmath/Blending.h>
-
-#include <stdio.h>
 
 namespace ltests
 {
