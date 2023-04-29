@@ -4,8 +4,6 @@
  *
  * Basic geometry utils
  *
- * \version 1.0.0
- * \date 14/04/2023
  * \author Sergey Kosarevsky, 2023
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/lutils
@@ -14,6 +12,7 @@
 #pragma once
 
 #include "lmath/Math.h"
+#include "lmath/Matrix.h"
 #include "lmath/Vector.h"
 
 namespace ldr
