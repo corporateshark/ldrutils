@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <lmath/Matrix.h>
 #include <lmath/Vector.h>
 
 namespace ldr
@@ -103,6 +104,23 @@ class plane3
 			return ePlaneClassify_Back;
 		}
 		return ePlaneClassify_Plane;
+	}
+
+	/**
+	 * Compute which subspace N is pointing to:
+	 *       Nx Ny Nz
+	 *    0  +  +  +
+	 *    1  -  +  +
+	 *    2  +  -  +
+	 *    3  -  -  +
+	 *    4  +  +  -
+	 *    5  -  +  -
+	 *    6  +  -  -
+	 *    7  -  -  -
+	 **/
+	LFORCEINLINE static int getNearPointMask(const vec3& n)
+	{
+		return n.x > 0 ? (n.y > 0 ? (n.z > 0 ? 0 : 4) : (n.z > 0 ? 2 : 6)) : (n.y > 0 ? (n.z > 0 ? 1 : 5) : (n.z > 0 ? 3 : 7));
 	}
 };
 
