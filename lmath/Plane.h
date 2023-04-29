@@ -16,39 +16,47 @@
 namespace ldr
 {
 
+enum ePlaneClassify
+{
+	ePlaneClassify_Front = 0,
+	ePlaneClassify_Back  = 1,
+	ePlaneClassify_Plane = 2,
+};
+
 class plane3
 {
  public:
-	union {
-		vec4 p;
-		struct {
-			vec3 n;
-			float d;
-		};
-	};
+	vec3 n;
+	float d;
 
  public:
 	plane3()
-	: p(0.0f, 0.0f, 1.0f, 0.0f){};
+	: n(0.0f, 0.0f, 1.0f)
+	, d(0.0f){};
 	/// from a plane equation
 	explicit plane3(const vec4& v)
-	: p(v){};
+	: n(v.toVector3())
+	, d(v.w){};
 	/// from a normal and parameter
 	explicit plane3(const vec3& normal, float d)
-	: p(normal, d){};
+	: n(normal)
+	, d(d){};
 	/// from a plane equation
 	plane3(float nx, float ny, float nz, float d)
-	: p(vec3(nx, ny, nz), d){};
+	: n(vec3(nx, ny, nz))
+	, d(d){};
 	/// from a point and normal
 	plane3(const vec3& pt, const vec3& normal)
-	: p(normal, -dot(pt, normal)){};
+	: n(normal)
+	, d(-dot(pt, normal)){};
 	/// from 3 points
 	plane3(const vec3& p1, const vec3& p2, const vec3& p3)
 	: plane3(p1, normalize(cross(p2 - p1, p3 - p1))){};
-	LFORCEINLINE float operator[](size_t idx) const { return p[idx]; };
-	LFORCEINLINE float& operator[](size_t idx) { return p[idx]; };
-	LFORCEINLINE const float* toFloatPtr() const { return p.toFloatPtr(); }
-	LFORCEINLINE float* toFloatPtr() { return p.toFloatPtr(); }
+	LFORCEINLINE float operator[](size_t idx) const { return n[idx]; };
+	LFORCEINLINE float& operator[](size_t idx) { return n[idx]; };
+	LFORCEINLINE const float* toFloatPtr() const { return n.toFloatPtr(); }
+	LFORCEINLINE float* toFloatPtr() { return n.toFloatPtr(); }
+	LFORCEINLINE vec4 toVector4() const { return vec4(n, d); }
 	LFORCEINLINE vec3 toVector3() const { return n; }
 	LFORCEINLINE vec3 getNormal() const { return n; }
 
@@ -69,6 +77,32 @@ class plane3
 	{
 		*v1 = n.getOrthogonalVector();
 		*v2 = normalize(cross(n, *v1));
+	}
+
+	/// construct a reflection matrix for this plane
+	LFORCEINLINE mat4 reflect() const
+	{
+		// clang-format off
+		return mat4(
+			 vec4(-2.0f * n.x * n.x + 1.0f, -2.0f * n.y * n.x,        -2.0f * n.z * n.x,        0.0f),
+			 vec4(-2.0f * n.x * n.y,        -2.0f * n.y * n.y + 1.0f, -2.0f * n.z * n.y,        0.0f),
+			 vec4(-2.0f * n.x * n.z,        -2.0f * n.y * n.z,        -2.0f * n.z * n.z + 1.0f, 0.0f),
+			 vec4(-2.0f * n.x * d,          -2.0f * n.y * d,          -2.0f * n.z * d,          1.0f));
+		// clang-format on
+	}
+
+	/// Classify the location of point respectively to this plane (front, back, in-plane)
+	ePlaneClassify classifyPoint(const vec3& pt) const
+	{
+		const float d = getDistanceToPointSigned(pt);
+
+		if (d > LMATH_EPSILON) {
+			return ePlaneClassify_Front;
+		}
+		if (d < LMATH_EPSILON) {
+			return ePlaneClassify_Back;
+		}
+		return ePlaneClassify_Plane;
 	}
 };
 

@@ -24,6 +24,8 @@
 
  `Matrix.h` - mat3/mat4
 
+ `Plane.h ` - plane3
+
  `Ray.h` - ray3
 
  `Vector.h` - vec2/vec3/vec4
