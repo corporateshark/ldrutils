@@ -26,7 +26,7 @@ add_library(LUtils ${SRC_FILES} ${HEADER_FILES})
 
 target_include_directories(LUtils PUBLIC .)
 
-set_property(TARGET LUtils PROPERTY CXX_STANDARD 17)
+set_property(TARGET LUtils PROPERTY CXX_STANDARD 20)
 set_property(TARGET LUtils PROPERTY CXX_STANDARD_REQUIRED ON)
 
 if(LMATH_USE_SHORTCUT_TYPES)
