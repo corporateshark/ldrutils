@@ -30,6 +30,19 @@ class MeshBuilder final
 	{
 	}
 	void setNormal(GS_VEC3 n) { vtx_.normal = n; }
+	void setTexCoord(GS_VEC3 uvw) { vtx_.uv = GS_VEC2(uvw.x, uvw.y); }
+	void emitVertex(GS_VEC3 p)
+	{
+		assert(activeVertexCount_ < vertices_.size());
+		vtx_.pos                        = p;
+		vertices_[activeVertexCount_++] = vtx_;
+	}
+	void emitVertex(float x, float y, float z)
+	{
+		assert(activeVertexCount_ < vertices_.size());
+		vtx_.pos                        = GS_VEC3(x, y, z);
+		vertices_[activeVertexCount_++] = vtx_;
+	}
 	void emitVertex(GS_VEC2 uv, GS_VEC3 p)
 	{
 		assert(activeVertexCount_ < vertices_.size());
@@ -291,4 +304,128 @@ std::vector<Vertex> GeometryShapes::createIcoSphere(GS_VEC3 center, float radius
 	}
 
 	return mesh;
+}
+
+std::vector<Vertex> GeometryShapes::createAxisAlignedBox(GS_VEC3 center, GS_VEC3 halfDiagonal)
+{
+	std::vector<Vertex> mesh(36);
+
+	MeshBuilder B(mesh);
+
+	const float k = 1.0f;
+	const GS_VEC3 uvwScale(1.0f, 1.0f, 1.0f);
+
+	const GS_VEC3 min = center - halfDiagonal;
+	const GS_VEC3 max = center + halfDiagonal;
+
+	// top
+	B.setNormal(k * GS_VEC3(0, 0, 1));
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, max.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, max.z);
+
+	// bottom
+	B.setNormal(k * GS_VEC3(0, 0, -1));
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, min.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, min.z);
+
+	// left
+	B.setNormal(k * GS_VEC3(0, 1, 0));
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, max.y, max.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, max.y, min.z);
+
+	// right
+	B.setNormal(k * GS_VEC3(0, -1, 0));
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, min.y, max.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, min.z);
+
+	// front
+	B.setNormal(k * GS_VEC3(1, 0, 0));
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(max.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(max.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, max.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(max.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(max.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(max.x, min.y, min.z);
+
+	// back
+	B.setNormal(k * GS_VEC3(-1, 0, 0));
+
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(min.x, max.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 0, 0));
+	B.emitVertex(min.x, min.y, min.z);
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, min.y, max.z);
+
+	B.setTexCoord(uvwScale * GS_VEC3(0, 1, 0));
+	B.emitVertex(min.x, min.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 1, 0));
+	B.emitVertex(min.x, max.y, max.z);
+	B.setTexCoord(uvwScale * GS_VEC3(1, 0, 0));
+	B.emitVertex(min.x, max.y, min.z);
+
+	return mesh;
+}
+
+void GeometryShapes::addAxisAlignedBox(std::vector<Vertex>& v, GS_VEC3 center, GS_VEC3 halfDiagonal)
+{
+	const std::vector<Vertex> mesh = createAxisAlignedBox(center, halfDiagonal);
+
+	v.insert(v.end(), mesh.begin(), mesh.end());
 }

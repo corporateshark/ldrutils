@@ -41,7 +41,11 @@ std::vector<Vertex> createDisk(float innerRadius, float outerRadius, int numSlic
 
 std::vector<Vertex> createOrbit(float radius, int subdivision); // LINE_STRIP
 
+std::vector<Vertex> createAxisAlignedBox(GS_VEC3 center, GS_VEC3 halfDiagonal); // TRIANGLE
+
 // subdivision level: 0 - icosahedron
 std::vector<Vertex> createIcoSphere(GS_VEC3 center, float radius, unsigned int subdivision); // TRIANGLE
+
+void addAxisAlignedBox(std::vector<Vertex>& v, GS_VEC3 center, GS_VEC3 halfDiagonal);
 
 } // namespace GeometryShapes
