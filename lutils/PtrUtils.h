@@ -19,9 +19,9 @@
 
 namespace ldr {
 
-template <class T, class... Args> clPtr<T> make_intrusive(Args&&... args)
-{
-	return clPtr<T>(new T(std::forward<Args>(args)...));
+template<class T, class... Args>
+clPtr<T> make_intrusive(Args&&... args) {
+  return clPtr<T>(new T(std::forward<Args>(args)...));
 }
 
 } // namespace ldr

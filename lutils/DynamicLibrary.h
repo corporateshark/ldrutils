@@ -16,18 +16,19 @@
 namespace ldr {
 
 /// Cross-platform dynamic link libraries
-class DynamicLibrary
-{
-public:
-	DynamicLibrary() = default;
-	~DynamicLibrary();
+class DynamicLibrary {
+ public:
+  DynamicLibrary() = default;
+  ~DynamicLibrary();
 
-	void* getProcAddress(const char* procName) const;
-	bool load(const char* fileName);
-	bool isLoaded() const { return handle_ != nullptr; }
+  void* getProcAddress(const char* procName) const;
+  bool load(const char* fileName);
+  bool isLoaded() const {
+    return handle_ != nullptr;
+  }
 
-private:
-	void* handle_ = nullptr;
+ private:
+  void* handle_ = nullptr;
 };
 
 } // namespace ldr

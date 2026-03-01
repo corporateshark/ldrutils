@@ -24,13 +24,12 @@ using GS_VEC2 = ldr::vec2;
 using GS_VEC3 = ldr::vec3;
 #endif
 
-namespace GeometryShapes
-{
+namespace GeometryShapes {
 
 struct Vertex final {
-	GS_VEC3 pos    = { 0, 0, 0 };
-	GS_VEC2 uv     = { 0, 0 };
-	GS_VEC3 normal = { 0, 0, 1 };
+  GS_VEC3 pos = {0, 0, 0};
+  GS_VEC2 uv = {0, 0};
+  GS_VEC3 normal = {0, 0, 1};
 };
 
 std::vector<Vertex> createQuad2D(GS_VEC2 a, GS_VEC2 b, const float z = 0.0f); // TRIANGLE_STRIP
