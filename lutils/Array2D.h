@@ -4,9 +4,9 @@
  *
  * Access a 1D array (vector) as a 2D array
  *
- * \version 1.0.0
- * \date 04/03/2023
- * \author Sergey Kosarevsky, 2023
+ * \version 1.0.1
+ * \date 01/03/2026
+ * \author Sergey Kosarevsky, 2023-2026
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/ldrutils
  */
@@ -25,8 +25,10 @@ class Array2D {
  public:
   Array2D() = delete;
   Array2D(size_t w, size_t h) : width_(w), height_(h), container_(w * h) {}
-  Array2D(const Array2D<T>& other) : width_(other.width_), height_(other.height_), container_(other.container_) {}
-  Array2D(Array2D<T>&& other) : width_(other.width_), height_(other.height_), container_(std::move(other.container_)) {}
+  Array2D(const Array2D<T>&) = default;
+  Array2D(Array2D<T>&&) = default;
+  Array2D& operator=(const Array2D<T>&) = default;
+  Array2D& operator=(Array2D<T>&&) = default;
   LFORCEINLINE const value_type& operator()(size_t i, size_t j) const {
     return container_[j * width_ + i];
   };
