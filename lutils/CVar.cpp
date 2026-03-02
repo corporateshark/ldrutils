@@ -235,9 +235,6 @@ const float* CVar::getVector() const {
   if (flags_ & eCVarTypeFlags_Float)
     return float_;
 
-  if (flags_ & eCVarTypeFlags_Float)
-    return float_;
-
   getConvertedToVector(float_);
 
   flags_ |= eCVarTypeFlags_Float;
