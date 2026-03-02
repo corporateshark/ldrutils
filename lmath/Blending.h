@@ -61,7 +61,7 @@ inline float blend_ColorDodge(float base, float overlay) {
   return (overlay > 1.0f - LMATH_EPSILON) ? overlay : ldr::minf(1.0f, base / (1.0f - overlay));
 }
 inline float blend_ColorBurn(float base, float overlay) {
-  return (overlay < LMATH_EPSILON) ? overlay : ldr::minf(0.0f, 1.0f - (1.0f - base) / overlay);
+  return (overlay < LMATH_EPSILON) ? overlay : ldr::maxf(0.0f, 1.0f - (1.0f - base) / overlay);
 }
 inline float blend_LinearDodge(float base, float overlay) {
   return blend_Add(base, overlay);
