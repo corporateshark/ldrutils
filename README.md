@@ -1,6 +1,6 @@
 # Building
 
-Requires CMake 3.16+ and a C++20 compiler.
+Requires CMake 3.22+ and a C++20 compiler.
 
 ```
 cmake -B build -DLMATH_ENABLE_TESTS=ON
