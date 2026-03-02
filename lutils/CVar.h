@@ -42,6 +42,7 @@ enum eCVarTypeFlags {
 
 class iCVarChangedListener {
  public:
+  virtual ~iCVarChangedListener() = default;
   virtual void cvarChanged(CVar* v) = 0;
 };
 
