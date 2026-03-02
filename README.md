@@ -1,3 +1,21 @@
+# Building
+
+Requires CMake 3.16+ and a C++20 compiler.
+
+```
+cmake -B build -DLMATH_ENABLE_TESTS=ON
+cmake --build build
+```
+
+## CMake options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `LMATH_ENABLE_TESTS` | `OFF` | Build tests (Google Test) |
+| `LMATH_ENABLE_AVX` | `ON` | Enable AVX (auto-disabled if unsupported) |
+| `LMATH_ENABLE_AVX2` | `ON` | Enable AVX2 (auto-disabled if unsupported) |
+| `LMATH_USE_SHORTCUT_TYPES` | `OFF` | Use lmath types without the `ldr::` namespace |
+
 # lutils
 
  `Array2D.h` - A simple 2D array on top of a 1D vector container (std::vector etc).
