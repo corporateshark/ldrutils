@@ -190,6 +190,47 @@ void testRotate(const vec3& v1, const vec3& v2, float eps) {
 
 } // namespace
 
+GTEST_TEST(lmath, mat4_determinant) {
+  // identity determinant should be 1
+  ASSERT_FLOAT_EQ(mat4::getIdentity().det(), 1.0f);
+
+  // a matrix with non-zero entries everywhere so that row-index typos in
+  // the cofactor sub-determinants produce visibly wrong results
+  // clang-format off
+  const mat4 m(
+    vec4(1.0f, 2.0f, 3.0f, 4.0f),
+    vec4(5.0f, 6.0f, 7.0f, 8.0f),
+    vec4(2.0f, 6.0f, 4.0f, 8.0f),
+    vec4(3.0f, 1.0f, 1.0f, 2.0f));
+  // clang-format on
+
+  // verified with numpy: np.linalg.det(M) == 72.0
+  ASSERT_FLOAT_EQ(m.det(), 72.0f);
+}
+
+GTEST_TEST(lmath, mat4_inverse) {
+  const float eps = 0.0001f;
+
+  // M * M^-1 should equal identity
+  // clang-format off
+  mat4 m(
+    vec4(1.0f, 2.0f, 3.0f, 4.0f),
+    vec4(5.0f, 6.0f, 7.0f, 8.0f),
+    vec4(2.0f, 6.0f, 4.0f, 8.0f),
+    vec4(3.0f, 1.0f, 1.0f, 2.0f));
+  // clang-format on
+
+  mat4 inv = m;
+  inv.inverse();
+
+  mat4 result = m * inv;
+  mat4 I = mat4::getIdentity();
+
+  for (size_t i = 0; i != 4; ++i)
+    for (size_t j = 0; j != 4; ++j)
+      ASSERT_NEAR(result[i][j], I[i][j], eps);
+}
+
 GTEST_TEST(lmath, mat3_rotate1) {
   const float eps = 0.0000001f;
   testRotate(vec3(1.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), eps);
