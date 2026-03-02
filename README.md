@@ -14,18 +14,26 @@
 
  `PtrUtils.h` - Intrusive smartpointer utils (depends on the <utility> header).
 
+ `ScopeExit.h` - RAII scope guard macro.
+
  `Utils.h` - Various utility functions.
 
 # lmath
 
- `Geometry.h` - Geometry utilities
+ `Blending.h` - Bitmap blending operators.
 
- `Math.h` - Math utilities
+ `Colors.h` - Predefined color constants.
 
- `Matrix.h` - mat3/mat4
+ `Geometry.h` - Geometry utilities.
 
- `Plane.h ` - plane3
+ `GeometryShapes.h` - Mesh generation (quad, disk, icosphere, box, etc).
 
- `Ray.h` - ray3
+ `Math.h` - Math utilities.
 
- `Vector.h` - vec2/vec3/vec4
+ `Matrix.h` - mat3/mat4.
+
+ `Plane.h` - plane3.
+
+ `Ray.h` - ray3.
+
+ `Vector.h` - vec2/vec3/vec4.
