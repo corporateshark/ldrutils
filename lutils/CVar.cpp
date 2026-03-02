@@ -148,6 +148,7 @@ void CVar::getConvertedToVector(float* out) const {
   case eCVarType_Vec4:
     return;
   case eCVarType_String:
+    out[0] = out[1] = out[2] = out[3] = 0.0f;
     sscanf(string_.c_str(), "%f %f %f %f", &out[0], &out[1], &out[2], &out[3]);
   }
 }
