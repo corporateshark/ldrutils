@@ -33,7 +33,7 @@ enum class ScopeGuardOnExit {};
 template<typename T>
 class ScopeGuard {
  public:
-  explicit ScopeGuard(T&& fn) : fn_(std ::move(fn)) {}
+  explicit ScopeGuard(T&& fn) : fn_(std::move(fn)) {}
   ~ScopeGuard() {
     fn_();
   }
