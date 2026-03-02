@@ -13,19 +13,24 @@
 
 #include "DynamicLibrary.h"
 
+#include <stdio.h>
+
 // clang-format off
 #if defined(_WIN32)
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #else
 #  include <dlfcn.h>
-#  include <stdio.h>
 #endif
 // clang-format on
 
 bool ldr::DynamicLibrary::load(const char* fileName) {
 #if defined(_WIN32)
   handle_ = (void*)::LoadLibrary(fileName);
+
+  if (!handle_) {
+    printf("Failed to load %s (error %lu)\n", fileName, ::GetLastError());
+  }
 #else
   handle_ = dlopen(fileName, RTLD_LAZY);
 
