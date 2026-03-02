@@ -152,6 +152,29 @@ GTEST_TEST(lmath, mat4_zero_identity) {
   ASSERT_TRUE(m[3][3] == 0.0f);
 }
 
+GTEST_TEST(lmath, plane3_classifyPoint) {
+  using namespace ldr;
+
+  // XY plane: normal = +Z, d = 0
+  const vec3 origin(0.0f, 0.0f, 0.0f);
+  const plane3 p(origin, vec3(0.0f, 0.0f, 1.0f));
+
+  // clearly in front
+  ASSERT_EQ(p.classifyPoint(vec3(0.0f, 0.0f, 5.0f)), ePlaneClassify_Front);
+
+  // clearly behind
+  ASSERT_EQ(p.classifyPoint(vec3(0.0f, 0.0f, -5.0f)), ePlaneClassify_Back);
+
+  // exactly on the plane
+  ASSERT_EQ(p.classifyPoint(origin), ePlaneClassify_Plane);
+
+  // within epsilon of the plane — should be classified as on-plane, not back
+  const vec3 nearFront(0.0f, 0.0f, LMATH_EPSILON * 0.5f);
+  const vec3 nearBack(0.0f, 0.0f, -LMATH_EPSILON * 0.5f);
+  ASSERT_EQ(p.classifyPoint(nearFront), ePlaneClassify_Plane);
+  ASSERT_EQ(p.classifyPoint(nearBack), ePlaneClassify_Plane);
+}
+
 namespace {
 
 void printMat(const mat3& m) {
