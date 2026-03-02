@@ -122,7 +122,7 @@ class plane3 {
     if (d > LMATH_EPSILON) {
       return ePlaneClassify_Front;
     }
-    if (d < LMATH_EPSILON) {
+    if (d < -LMATH_EPSILON) {
       return ePlaneClassify_Back;
     }
     return ePlaneClassify_Plane;
