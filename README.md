@@ -26,9 +26,13 @@ cmake --build build
 
  `DynamicLibrary.h` - Cross-platform dynamic link libraries (.dll/.so).
 
+ `Handle.h` - Lightweight non-ref-counted generational handles.
+
  `Macros.h` - Useful utility macros.
 
  `Ptr.h` - Minimalistic intrusive smartpointer.
+
+ `Pool.h` - Generational object pool with free-list slot recycling, accessed through `Handle<>`.
 
  `PtrUtils.h` - Intrusive smartpointer utils (depends on the <utility> header).
 
