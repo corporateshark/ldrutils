@@ -39,4 +39,16 @@
 #	define LMATH_USE_AVX2 1
 #endif // __AVX2__
 
+#if defined(_WIN32) || defined(_WIN64)
+#  define LOS_WINDOWS
+#endif // _WIN32 || _WIN64
+
+#if defined(__linux__)
+#  define LOS_LINUX
+#endif // __linux__
+
+#if defined(ANDROID)
+#  define LOS_ANDROID
+#endif // ANDROID
+
 // clang-format on
