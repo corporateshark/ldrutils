@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 #include "Macros.h"
@@ -59,7 +60,7 @@ class Handle final {
   }
 
  private:
-  Handle(IndexType index, IndexType gen) : index_(index), gen_(gen) {};
+  Handle(IndexType index, IndexType gen) : index_(index), gen_(gen) {}
 
   template<typename PoolHandleTag, typename ObjectType, typename PoolIndexType>
   friend class Pool;

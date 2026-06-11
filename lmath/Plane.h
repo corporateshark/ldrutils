@@ -28,17 +28,17 @@ class plane3 {
   float d;
 
  public:
-  plane3() : n(0.0f, 0.0f, 1.0f), d(0.0f) {};
+  plane3() : n(0.0f, 0.0f, 1.0f), d(0.0f) {}
   /// from a plane equation
-  explicit plane3(const vec4& v) : n(v.toVector3()), d(v.w) {};
+  explicit plane3(const vec4& v) : n(v.toVector3()), d(v.w) {}
   /// from a normal and parameter
-  explicit plane3(const vec3& normal, float d) : n(normal), d(d) {};
+  explicit plane3(const vec3& normal, float d) : n(normal), d(d) {}
   /// from a plane equation
-  plane3(float nx, float ny, float nz, float d) : n(vec3(nx, ny, nz)), d(d) {};
+  plane3(float nx, float ny, float nz, float d) : n(vec3(nx, ny, nz)), d(d) {}
   /// from a point and normal
-  plane3(const vec3& pt, const vec3& normal) : n(normal), d(-dot(pt, normal)) {};
+  plane3(const vec3& pt, const vec3& normal) : n(normal), d(-dot(pt, normal)) {}
   /// from 3 points
-  plane3(const vec3& p1, const vec3& p2, const vec3& p3) : plane3(p1, ldr::normalize(cross(p2 - p1, p3 - p1))) {};
+  plane3(const vec3& p1, const vec3& p2, const vec3& p3) : plane3(p1, ldr::normalize(cross(p2 - p1, p3 - p1))) {}
   LFORCEINLINE float operator[](size_t idx) const {
     return n[idx];
   };
