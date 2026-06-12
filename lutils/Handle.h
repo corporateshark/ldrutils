@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include <cstddef>
 #include <cstdint>
 
 #include "Macros.h"
@@ -20,14 +19,15 @@ namespace ldr {
 // Based on https://enginearchitecture.realtimerendering.com/downloads/reac2023_modern_mobile_rendering_at_hypehype.pdf
 template<typename HandleTag, typename IndexType = uint32_t>
 class Handle final {
-  static_assert(sizeof(ptrdiff_t) == 8);
   static_assert(sizeof(IndexType) >= sizeof(uint16_t) && sizeof(IndexType) <= sizeof(uint32_t), "Unsupported IndexType size");
 
  public:
   Handle() = default;
   explicit Handle(void* ptr)
-  : index_(reinterpret_cast<ptrdiff_t>(ptr) & 0xffffffff)
-  , gen_((reinterpret_cast<ptrdiff_t>(ptr) >> 32) & 0xffffffff) {}
+  : index_(static_cast<IndexType>(reinterpret_cast<uintptr_t>(ptr)))
+  , gen_(static_cast<IndexType>(static_cast<uint64_t>(reinterpret_cast<uintptr_t>(ptr)) >> (sizeof(IndexType) * 8))) {
+    static_assert(sizeof(void*) >= sizeof(IndexType) * 2, "Packing a handle into a pointer requires a pointer twice the index width");
+  }
 
   LFORCEINLINE bool empty() const {
     return gen_ == 0;
@@ -42,11 +42,11 @@ class Handle final {
     return gen_;
   }
   LFORCEINLINE void* indexAsVoid() const {
-    return reinterpret_cast<void*>(static_cast<ptrdiff_t>(index_));
+    return reinterpret_cast<void*>(static_cast<uintptr_t>(index_));
   }
   LFORCEINLINE void* handleAsVoid() const {
-    static_assert(sizeof(void*) >= sizeof(uint64_t));
-    return reinterpret_cast<void*>((static_cast<ptrdiff_t>(gen_) << 32) + static_cast<ptrdiff_t>(index_));
+    static_assert(sizeof(void*) >= sizeof(IndexType) * 2, "Packing a handle into a pointer requires a pointer twice the index width");
+    return reinterpret_cast<void*>(static_cast<uintptr_t>((static_cast<uint64_t>(gen_) << (sizeof(IndexType) * 8)) | index_));
   }
   LFORCEINLINE bool operator==(const Handle<HandleTag, IndexType>& other) const {
     return index_ == other.index_ && gen_ == other.gen_;
