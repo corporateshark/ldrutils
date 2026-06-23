@@ -4,9 +4,9 @@
  *
  * Math utilities
  *
- * \version 1.0.0
- * \date 02/04/2023
- * \author Sergey Kosarevsky, 2023
+ * \version 1.0.1
+ * \date 23/06/2026
+ * \author Sergey Kosarevsky, 2023-2026
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/ldrutils
  */
@@ -14,6 +14,7 @@
 #pragma once
 
 #include <cmath>
+#include <stddef.h>
 #include <stdint.h>
 
 #include "lutils/Macros.h"
