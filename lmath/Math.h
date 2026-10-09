@@ -154,7 +154,8 @@ template<class T>
 // note: degrees
 template<class T>
 [[nodiscard]] LFORCEINLINE T clipAngleTo0_360(T angle) {
-  return std::fmod(angle, T(360));
+  const T a = std::fmod(angle, T(360));
+  return a < T(0) ? a + T(360) : a;
 }
 
 [[nodiscard]] LFORCEINLINE float vecToAngle(float x, float y) {
