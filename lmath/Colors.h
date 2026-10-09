@@ -4,7 +4,7 @@
  *
  * Common colors definitions
  *
- * \author Sergey Kosarevsky, 2023
+ * \author Sergey Kosarevsky, 2023-2026
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/ldrutils
  */
@@ -109,6 +109,7 @@
 #define LC_OrangeRed          vec4(1.0000f, 0.2500f, 0.0000f, 1.0f)
 #define LC_Orchid             vec4(0.8588f, 0.4392f, 0.8588f, 1.0f)
 #define LC_PaleGreen          vec4(0.5608f, 0.7373f, 0.5608f, 1.0f)
+#define LC_PapayaSpark        vec4(1.0000f, 0.5020f, 0.0000f, 1.0f)
 #define LC_Pink               vec4(0.7373f, 0.5608f, 0.5608f, 1.0f)
 #define LC_Plum               vec4(0.9176f, 0.6784f, 0.9176f, 1.0f)
 #define LC_Salmon             vec4(0.4353f, 0.2588f, 0.2588f, 1.0f)
