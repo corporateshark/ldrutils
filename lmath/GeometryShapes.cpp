@@ -217,9 +217,13 @@ std::vector<Vertex> GeometryShapes::createDisk(const float innerRadius, const fl
 }
 
 std::vector<Vertex> GeometryShapes::createOrbit(const float radius, const int subdivision) {
+  assert(subdivision > 0);
+  if (subdivision <= 0)
+    return {};
+
   std::vector<GS_VEC3> vertices;
-  for (size_t i = 0; i < 360; i += (360 / subdivision)) {
-    const float heading = static_cast<float>((M_PI / 180.0f) * i);
+  for (int i = 0; i != subdivision; i++) {
+    const float heading = static_cast<float>(2.0 * M_PI * i / subdivision);
     vertices.emplace_back(cos(heading) * radius, sin(heading) * radius, 0.0f);
   }
 
