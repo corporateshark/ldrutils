@@ -49,7 +49,7 @@ inline float blend_Exclusion(float base, float overlay) {
   return base + overlay - 2 * base * overlay;
 }
 inline float blend_Overlay(float base, float overlay) {
-  return (overlay < 0.5f) ? (2.0f * base * overlay) : (2.0f * base - 1.0f) * (1.0f - overlay);
+  return (base < 0.5f) ? (2.0f * base * overlay) : (1.0f - 2.0f * (1.0f - base) * (1.0f - overlay));
 }
 inline float blend_SoftLight(float base, float overlay) {
   return (overlay < 0.5f) ? (base + 0.5f) * overlay : (base - 0.5f) * (1.0f - overlay);
