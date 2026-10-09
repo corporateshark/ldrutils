@@ -61,7 +61,7 @@ mat3 mat3::getInversed() const
 void mat3::transpose()
 {
 	for (size_t i = 0; i != 3; i++) {
-		for (size_t j = 0; j != 3; j++) {
+		for (size_t j = i + 1; j != 3; j++) {
 			const float tmp = m[i][j];
 			m[i][j]         = m[j][i];
 			m[j][i]         = tmp;
@@ -356,7 +356,7 @@ mat4 mat4::getInversed() const
 void mat4::transpose()
 {
 	for (size_t i = 0; i != 4; i++) {
-		for (size_t j = 0; j != 4; j++) {
+		for (size_t j = i + 1; j != 4; j++) {
 			const float tmp = m[i][j];
 			m[i][j]         = m[j][i];
 			m[j][i]         = tmp;

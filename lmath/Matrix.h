@@ -4,7 +4,7 @@
  *
  * mat3/mat4
  *
- * \author Sergey Kosarevsky, 2023
+ * \author Sergey Kosarevsky, 2023-2026
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/ldrutils
  */

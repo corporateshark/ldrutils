@@ -4,9 +4,9 @@
  *
  * lmath tests
  *
- * \version 1.0.0
- * \date 15/03/2023
- * \author Sergey Kosarevsky, 2023
+ * \version 1.0.1
+ * \date 08/10/2026
+ * \author Sergey Kosarevsky, 2023-2026
  * \author support@linderdaum.com   http://www.linderdaum.com   http://blog.linderdaum.com
  * https://github.com/corporateshark/ldrutils
  */
@@ -252,6 +252,59 @@ GTEST_TEST(lmath, mat4_inverse) {
   for (size_t i = 0; i != 4; ++i)
     for (size_t j = 0; j != 4; ++j)
       ASSERT_NEAR(result[i][j], I[i][j], eps);
+}
+
+GTEST_TEST(lmath, mat3_transpose) {
+  // clang-format off
+  const mat3 m(
+    vec3(1.0f, 2.0f, 3.0f),
+    vec3(4.0f, 5.0f, 6.0f),
+    vec3(7.0f, 8.0f, 9.0f));
+  // clang-format on
+
+  mat3 t = m;
+  t.transpose();
+
+  const mat3 g = m.getTransposed();
+
+  for (size_t i = 0; i != 3; ++i)
+    for (size_t j = 0; j != 3; ++j) {
+      ASSERT_EQ(t[i][j], m[j][i]);
+      ASSERT_EQ(g[i][j], m[j][i]);
+    }
+
+  // transposing twice gives the original matrix
+  t.transpose();
+
+  for (size_t i = 0; i != 3; ++i)
+    for (size_t j = 0; j != 3; ++j)
+      ASSERT_EQ(t[i][j], m[i][j]);
+}
+
+GTEST_TEST(lmath, mat4_transpose) {
+  // clang-format off
+  const mat4 m(
+    vec4( 1.0f,  2.0f,  3.0f,  4.0f),
+    vec4( 5.0f,  6.0f,  7.0f,  8.0f),
+    vec4( 9.0f, 10.0f, 11.0f, 12.0f),
+    vec4(13.0f, 14.0f, 15.0f, 16.0f));
+  // clang-format on
+
+  mat4 t = m;
+  t.transpose();
+
+  const mat4 g = m.getTransposed();
+
+  for (size_t i = 0; i != 4; ++i)
+    for (size_t j = 0; j != 4; ++j) {
+      ASSERT_EQ(t[i][j], m[j][i]);
+      ASSERT_EQ(g[i][j], m[j][i]);
+    }
+
+  // transposing twice gives the original matrix
+  t.transpose();
+
+  ASSERT_TRUE(t == m);
 }
 
 GTEST_TEST(lmath, mat3_rotate1) {
