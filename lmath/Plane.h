@@ -88,7 +88,7 @@ class plane3 {
 
   /// intersection of N-ray with this plane
   LFORCEINLINE vec3 getPointOnPlane() const {
-    return d * n / n.dot(n);
+    return -d * n / n.dot(n);
   }
   /// project vector's ends to plane's normal
   LFORCEINLINE vec3 projectToNormal(const vec3& v) const {
