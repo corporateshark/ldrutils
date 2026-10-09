@@ -52,7 +52,8 @@ inline float blend_Overlay(float base, float overlay) {
   return (base < 0.5f) ? (2.0f * base * overlay) : (1.0f - 2.0f * (1.0f - base) * (1.0f - overlay));
 }
 inline float blend_SoftLight(float base, float overlay) {
-  return (overlay < 0.5f) ? (base + 0.5f) * overlay : (base - 0.5f) * (1.0f - overlay);
+  return (overlay < 0.5f) ? (2.0f * base * overlay + base * base * (1.0f - 2.0f * overlay))
+                          : (sqrtf(base) * (2.0f * overlay - 1.0f) + 2.0f * base * (1.0f - overlay));
 }
 inline float blend_HardLight(float base, float overlay) {
   return blend_Overlay(overlay, base);
