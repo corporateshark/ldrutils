@@ -355,7 +355,7 @@ class vec3 {
 #if defined(LMATH_USE_SSE4)
     const __m128 vec = _mm_setr_ps(x, y, z, 0.0f);
     const __m128 abs = _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), vec), vec);
-    const __m128i cmp = _mm_castps_si128(_mm_cmpge_ps(abs, _mm_set1_ps(eps)));
+    const __m128i cmp = _mm_castps_si128(_mm_cmpgt_ps(abs, _mm_set1_ps(eps)));
     return _mm_testz_si128(cmp, cmp) != 0;
 #else
     return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps;
@@ -846,7 +846,7 @@ class vec4 {
 #if defined(LMATH_USE_SSE4)
     const __m128 vec = _mm_loadu_ps(&x);
     const __m128 abs = _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), vec), vec);
-    const __m128i cmp = _mm_castps_si128(_mm_cmpge_ps(abs, _mm_set1_ps(eps)));
+    const __m128i cmp = _mm_castps_si128(_mm_cmpgt_ps(abs, _mm_set1_ps(eps)));
     return _mm_testz_si128(cmp, cmp) != 0;
 #else
     return std::fabs(x) <= eps && std::fabs(y) <= eps && std::fabs(z) <= eps && std::fabs(w) <= eps;
