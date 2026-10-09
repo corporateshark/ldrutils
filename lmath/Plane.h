@@ -92,7 +92,7 @@ class plane3 {
   }
   /// project vector's ends to plane's normal
   LFORCEINLINE vec3 projectToNormal(const vec3& v) const {
-    return (v * n) * n;
+    return v.dot(n) * n;
   }
   /// project vector's ends to plane
   LFORCEINLINE vec3 projectPoint(const vec3& pt) const {
