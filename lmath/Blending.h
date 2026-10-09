@@ -16,7 +16,7 @@
 namespace ldr {
 
 inline float blend_Normal(float base, float overlay) {
-  return base;
+  return overlay;
 }
 inline float blend_Lighten(float base, float overlay) {
   return (overlay > base) ? overlay : base;
