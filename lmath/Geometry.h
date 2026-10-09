@@ -39,7 +39,7 @@ LFORCEINLINE vec3 convertSphericalToCartesian(const vec3& s) {
 // (x, y, z) -> (radius, thetaRad, phiRad)
 LFORCEINLINE vec3 convertCartesianToSpherical(const vec3& p) {
   const float r = p.length();
-  const float phi = atan2(p.y / r, p.z / r);
+  const float phi = atan2(p.y, p.x);
   const float theta = atan2(p.toVector2().length(), p.z);
 
   return vec3(r, theta, phi);
