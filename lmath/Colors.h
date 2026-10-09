@@ -22,7 +22,7 @@
 #define LC_Gray        vec4(0.7f, 0.7f, 0.7f, 1.0f)
 #define LC_Green       vec4(0.0f, 1.0f, 0.0f, 1.0f)
 #define LC_Lime        vec4(0.0f, 1.0f, 0.0f, 1.0f)
-#define LC_Olive       vec4(0.0f, 1.0f, 1.0f, 1.0f)
+#define LC_Olive       vec4(0.5f, 0.5f, 0.0f, 1.0f)
 #define LC_Purple      vec4(1.0f, 0.0f, 1.0f, 1.0f)
 #define LC_Red         vec4(1.0f, 0.0f, 0.0f, 1.0f)
 #define LC_Teal        vec4(0.0f, 1.0f, 1.0f, 1.0f)
