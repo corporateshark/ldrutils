@@ -96,7 +96,7 @@ class plane3 {
   }
   /// project vector's ends to plane
   LFORCEINLINE vec3 projectPoint(const vec3& pt) const {
-    return pt - projectToNormal(pt) + d * n;
+    return pt - projectToNormal(pt) - d * n;
   }
 
   LFORCEINLINE void buildBasis(vec3* v1, vec3* v2) const {
