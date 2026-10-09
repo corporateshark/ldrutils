@@ -63,9 +63,10 @@ class plane3 {
 
   LFORCEINLINE void invert() {
     n = -n;
+    d = -d;
   }
   LFORCEINLINE plane3 getInverted() const {
-    return plane3(-n, d);
+    return plane3(-n, -d);
   }
 
   LFORCEINLINE void normalize() {
